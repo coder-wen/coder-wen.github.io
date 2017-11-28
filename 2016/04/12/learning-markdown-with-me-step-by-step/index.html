@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="learn,learn markdown,markdown,markdown syntax,markdown 语法," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="markdown是什么 根据wiki百科，Markdown 是一种轻量级标记语言，创始人为约翰·格鲁伯（John Gruber）。它允许人们“使用易读易写的纯文本格式编写文档，然后转换成有效的XHTML(或者HTML)文档”。这种语言吸收了很多在电子邮件中已有的纯文本标记的特性2016年，markdown可以说无处不见">
+<meta name="keywords" content="learn,learn markdown,markdown,markdown syntax,markdown 语法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跟我一起学习markdown语法">
+<meta property="og:url" content="https://www.alwayscoder.com/2016/04/12/learning-markdown-with-me-step-by-step/index.html">
+<meta property="og:site_name" content="coderwen的踩坑日记">
+<meta property="og:description" content="markdown是什么 根据wiki百科，Markdown 是一种轻量级标记语言，创始人为约翰·格鲁伯（John Gruber）。它允许人们“使用易读易写的纯文本格式编写文档，然后转换成有效的XHTML(或者HTML)文档”。这种语言吸收了很多在电子邮件中已有的纯文本标记的特性2016年，markdown可以说无处不见，github的README都是.md结尾的，不少开源书籍也开始使用markdo">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.alwayscoder.com/wp-content/uploads/2016/04/hello-markdown.png">
+<meta property="og:image" content="https://www.alwayscoder.com/wp-content/uploads/2016/04/markdown-table.png">
+<meta property="og:updated_time" content="2017-11-28T14:24:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="跟我一起学习markdown语法">
+<meta name="twitter:description" content="markdown是什么 根据wiki百科，Markdown 是一种轻量级标记语言，创始人为约翰·格鲁伯（John Gruber）。它允许人们“使用易读易写的纯文本格式编写文档，然后转换成有效的XHTML(或者HTML)文档”。这种语言吸收了很多在电子邮件中已有的纯文本标记的特性2016年，markdown可以说无处不见，github的README都是.md结尾的，不少开源书籍也开始使用markdo">
+<meta name="twitter:image" content="https://www.alwayscoder.com/wp-content/uploads/2016/04/hello-markdown.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.alwayscoder.com/2016/04/12/learning-markdown-with-me-step-by-step/"/>
+
+
+
+
+
+  <title>跟我一起学习markdown语法 | coderwen的踩坑日记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">coderwen的踩坑日记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">coderwen的踩坑日记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2016/04/12/learning-markdown-with-me-step-by-step/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="coderwen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="coderwen的踩坑日记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">跟我一起学习markdown语法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-12T22:52:29+08:00">
+                2016-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Code-Stuff/" itemprop="url" rel="index">
+                    <span itemprop="name">Code Stuff</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="markdown是什么"><a href="#markdown是什么" class="headerlink" title="markdown是什么"></a>markdown是什么</h2><blockquote>
+<p>根据<a href="https://zh.wikipedia.org/wiki/Markdown" target="_blank" rel="noopener">wiki百科</a>，Markdown 是一种轻量级标记语言，创始人为约翰·格鲁伯（John Gruber）。它允许人们“使用易读易写的纯文本格式编写文档，然后转换成有效的XHTML(或者HTML)文档”。这种语言吸收了很多在电子邮件中已有的纯文本标记的特性<br>2016年，markdown可以说无处不见，github的README都是.md结尾的，不少开源书籍也开始使用markdown进行编辑，还不学学markdown你就out了<br><a id="more"></a></p>
+<h2 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h2></blockquote>
+<ul>
+<li>首推跨 Linux/MacOS/Windows  三平台<a href="https://atom.io/" target="_blank" rel="noopener">Atom</a>，自带markdown插件，编辑以及预览，接下来的课程我都使用atom来渲染演示</li>
+<li><p>MacOS</p>
+<ul>
+<li><a href="http://macdown.uranusjr.com/" target="_blank" rel="noopener">MacDown</a> 推荐免费开源的MacDown</li>
+<li><a href="http://25.io/mou/" target="_blank" rel="noopener">Mou</a> 国人开发，口碑非常不错</li>
+<li><a href="https://www.typora.io/" target="_blank" rel="noopener">typora</a> 免费轻量级的markdown编辑器同时支持MacOS、Windows</li>
+</ul>
+</li>
+<li><p>Windows</p>
+<ul>
+<li><a href="https://www.typora.io/" target="_blank" rel="noopener">typora</a> 免费轻量级的markdown编辑器同时支持MacOS、Windows</li>
+</ul>
+</li>
+<li><p>Linux</p>
+<ul>
+<li><a href="https://atom.io/" target="_blank" rel="noopener">Atom</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="学习markdown"><a href="#学习markdown" class="headerlink" title="学习markdown"></a>学习markdown</h2><p>选择好了你中意的markdown编辑器后，我们就可以开始markdown的学习了</p>
+<p>我们在终端中输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">atom learn-md.md</span><br></pre></td></tr></table></figure>
+<p>在新打开的atom编辑窗口我们就可以开始markdown的练习了<br>我们输入</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="strong">**hello-markdown**</span></span><br></pre></td></tr></table></figure>
+<p>接着按下ctrl+shift+m，看看右边是不是出现了一个learn-md.md preview窗口</p>
+<p>一个加粗的hello-markdown已经出现了，是不是很简单<br>[<img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/hello-markdown.png" alt="hello-markdown">(<a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/hello-markdown.png">https://www.alwayscoder.com/wp-content/uploads/2016/04/hello-markdown.png</a>)</p>
+<p>相信你已经清楚如何用atom编辑以及预览markdown了，接下来我们开始markdown语法的学习</p>
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><p>只需要在目标字符前后加入英文下划线_<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="emphasis">_我斜了_</span></span><br></pre></td></tr></table></figure></p>
+<p>恩，是斜了的，只是斜了不是弯了😂<br>如果你就是想输出英文下滑线怎么办呢，很简单使用\转义</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\<span class="emphasis">_我不想斜了\_</span></span><br></pre></td></tr></table></figure>
+<p>这样会转移输出   <em>我不想斜了</em><br>我们在hello markdown已经展示了如何让字体加粗，你不会已经忘了吧</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">`**我粗了**`</span></span><br></pre></td></tr></table></figure>
+<p>对，我确实粗了。</p>
+<p><strong>这里需要注意的是，markdown并不是像编程语言通过\n，这里我们暂时使用空格让markdown来区分换行，其他方法参考段落一节</strong></p>
+<p>对，如果你只是像下面这样简单地敲个回车继续写加粗的练习</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\<span class="emphasis">_我斜了\_</span></span><br><span class="line"><span class="strong">**我粗了**</span></span><br></pre></td></tr></table></figure>
+<p>那么渲染出来就成了<br><em>我斜了</em> 我粗了<br>正确的做法是空一行再输入</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">`\<span class="emphasis">_我斜了\_</span></span><br><span class="line"></span><br><span class="line"><span class="strong">**我粗了**</span>`</span><br></pre></td></tr></table></figure>
+<p>混合格式渲染<br>有同学要说了，我就要又粗又斜 😂 ，当然可以</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="strong">**_我又粗又斜_*</span>*</span><br></pre></td></tr></table></figure>
+<h2 id="各级标题"><a href="#各级标题" class="headerlink" title="各级标题"></a>各级标题</h2><p>写东西各级标题是少不了的，在markdown中渲染标题非常简单，几个#号代表几个标题</p>
+<p><strong>注意：#和标题字符中请留一个空格</strong></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># header one</span></span><br><span class="line"><span class="section">## header two</span></span><br><span class="line"><span class="section">### header three</span></span><br><span class="line"><span class="section">#### header four</span></span><br><span class="line"><span class="section">##### header five</span></span><br><span class="line"><span class="section">###### header six</span></span><br></pre></td></tr></table></figure>
+<p>在atom下我最多渲染到了6级标题，其他编辑器我没试过</p>
+<ul>
+<li><p>链接</p>
+<ul>
+<li>网址链接<pre><code>*   内联链接
+</code></pre></li>
+<li>引用链接</li>
+</ul>
+</li>
+<li>图片链接<pre><code>*   内链链接
+</code></pre><ul>
+<li>引用链接<br>markdown的链接主要就是上面四种，看着挺多的其实非常简单</li>
+</ul>
+</li>
+</ul>
+<h2 id="网址链接"><a href="#网址链接" class="headerlink" title="网址链接"></a>网址链接</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Welcome to my [<span class="string">blog</span>](<span class="link">https://www.alwayscoder.com</span>)</span><br></pre></td></tr></table></figure>
+<p>在因为方括号里写入链接文本，在英文圆括号中填入你的网址<br>渲染出来大概就是这样的 Welcome to my <a href="https://www.alwayscoder.com">blog</a><br>其实这就和html中的href时一样的，你使用相对地址一样可以渲染<br><code>我正在看[跟我一起学习markdown语法](/learning-markdown-with-me-step-by-step)</code><br>上面这种是最常见的内联链接，另一种是引用链接</p>
+<p><pre>`Let’s go <a href="www.google.com`&lt;/pre">google</a></pre></p>
+<p>看一眼都能懂<br>接下来我们看看怎么在markdown中插入图片<br><code>![github cat](https://octodex.github.com/images/mountietocat.png)</code><br>将上面的代码粘贴到atom稍等片刻，预览就会出现一只可爱github小猫<br>当然引用图片链接就和引用网址一样的，不用我说你都能猜出来了吧<br><code>![github cat][cute cat][cute cat]: https://octodex.github.com/images/mountietocat.png</code></p>
+<h2 id="块引用"><a href="#块引用" class="headerlink" title="块引用"></a>块引用</h2><p>块引用这种提高逼格的东西怎么能没有呢，要使用块引用只需在块引用文本前加上一个&gt;符号<br><code>&gt;&quot;Stay Hungry,Stay Foolish&quot;</code><br>块引用同时支持嵌套使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&quot;A journey of a thousand li starts with a single step.&quot;</span><br><span class="line">&gt;&gt;&quot;nested quote&quot;</span><br><span class="line">&gt;&gt;&gt;&quot;I&apos;m in trap&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>markdown也支持列表，无序列表和有序列表使用起来都非常简单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 在我前面加个*号</span><br><span class="line">* 对就是这样</span><br><span class="line">* 你已经成功了</span><br></pre></td></tr></table></figure></p>
+<p>值得注意，这里<code>*</code>号换成<code>+</code>或者<code>-</code>效果是一样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">list</span><br><span class="line">* one</span><br><span class="line">* two</span><br><span class="line">* three</span><br><span class="line">equal</span><br><span class="line">- one</span><br><span class="line">- two</span><br><span class="line">- three</span><br><span class="line">equal</span><br><span class="line">+ one</span><br><span class="line">+ two</span><br><span class="line">+ three</span><br></pre></td></tr></table></figure>
+<p>无序列表支持子列表，在父列表的下面那一行使用两个空格来表明子列表，在atom里tab默认是两个空格，所以直接tab即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">来试试子列表</span><br><span class="line">* 我是父列表</span><br><span class="line">  * 我是子列表</span><br><span class="line">  * 我也是子列表</span><br><span class="line">    * 我还能继续嵌套</span><br><span class="line">      * 再试试</span><br><span class="line">        * 哇真可以啊`&lt;/pre&gt;</span><br><span class="line">[</span><br><span class="line">![markdown-sub-list](https://www.alwayscoder.com/wp-content/uploads/2016/04/markdown-sub-list.png)(https://www.alwayscoder.com/wp-content/uploads/2016/04/markdown-sub-list.png)</span><br><span class="line">有序列表更加简单直接在每行的最前面加上数字.就可以了</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">how to become a good coder</span><br><span class="line">1. read good code</span><br><span class="line">2. think good code</span><br><span class="line">3. write good code</span><br></pre></td></tr></table></figure>
+<p>有序列表同样支持子列表嵌套，方法和无序列表我就不做展示了</p>
+<h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><p>之前我们使用了空行使markdown实现换行，这叫做hard breaking，太暴力了，我们还是来个soft breaking<br>不少文艺气息的码农说我要写首诗都要多敲那么多空行，soft breaking非常简单只需在句尾加上两个空格</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">春花秋月何时了，往事知多少。  </span><br><span class="line">小楼昨夜又东风，故国不堪回首月明中。  </span><br><span class="line">雕栏玉砌应犹在，只是朱颜改。  </span><br><span class="line">问君能有几多愁，恰似一江春水向东流。</span><br></pre></td></tr></table></figure>
+<p>不要忘了句尾的空格哦</p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>对，markdown还支持表格，语法非常简练</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">table</span><br><span class="line">name    | age  | lang</span><br><span class="line">-----   |-----:| :-----:</span><br><span class="line">Zhang   | 23   | java</span><br><span class="line">Li      | 32   | python</span><br><span class="line">Zhao    | 28   | C</span><br></pre></td></tr></table></figure>
+<p><img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/markdown-table.png" alt="markdown-table"><br>markdown默认是居左显示的，可以看到我在age下面的——右边加上了一个冒号，这代表居右显示，lang下面左右同时都有个冒号，代表了居中显示，很好记吧。</p>
+<h2 id="文字块or代码块"><a href="#文字块or代码块" class="headerlink" title="文字块or代码块"></a>文字块or代码块</h2><p>对于短小的字块高亮，我们使用反引号将其包围。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">``printf(&quot;hello world&quot;)``</span><br></pre></td></tr></table></figure>
+<p>如果你就想输出带反引号的helloworld怎么办，使用双反引号包起来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`` `hello world` ``</span><br></pre></td></tr></table></figure>
+<p>对于长文本来说双反引号就略显蛋疼了，我们之前说过识别换行就两种办法，softbreaking or hardbreaking，几十上百行谁和你breaking，蛋疼，这个时候就需要三反引号包围文本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">this is a very long text</span><br><span class="line">this is a very long text</span><br><span class="line">this is a very long text</span><br><span class="line">this is a very long text</span><br><span class="line">this is a very long text</span><br><span class="line">this is a very long text</span><br><span class="line">this is a very long text</span><br><span class="line">this is a very long text</span><br><span class="line">this is a very long text</span><br></pre></td></tr></table></figure></p>
+<p>什么，你要代码高亮，当然有啦，我们在三反引号后加上语言名称即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#### go example</span><br><span class="line">```go</span><br><span class="line">package main</span><br><span class="line">func main()&#123;</span><br><span class="line">  print(&quot;helloworld&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#### python example</span><br><span class="line">```python</span><br><span class="line">#php才是 23333</span><br><span class="line">print (&quot;python 是世界上最好的语言&quot;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"helloworld"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> (<span class="string">"python 是世界上最好的语言"</span>)</span><br></pre></td></tr></table></figure>
+<p>常见的markdown语法就是以上这些，博主还在学习中，有新的内容我会及时更新，如果有纰漏请不吝斧正。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/learn/" rel="tag"># learn</a>
+          
+            <a href="/tags/learn-markdown/" rel="tag"># learn markdown</a>
+          
+            <a href="/tags/markdown/" rel="tag"># markdown</a>
+          
+            <a href="/tags/markdown-syntax/" rel="tag"># markdown syntax</a>
+          
+            <a href="/tags/markdown-语法/" rel="tag"># markdown 语法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/12/keeping-process-running-after-zsh-terminal-exit/" rel="next" title="解决zsh下关闭终端后台程序不能继续运行的问题">
+                <i class="fa fa-chevron-left"></i> 解决zsh下关闭终端后台程序不能继续运行的问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/16/how-to-enable-preference-of-dropbox-on-mac-os/" rel="prev" title="解决mac下dropbox无法点击首选项">
+                解决mac下dropbox无法点击首选项 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">coderwen</p>
+              <p class="site-description motion-element" itemprop="description">闷声学技术，比西方记者快，比华莱士高</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#markdown是什么"><span class="nav-number">1.</span> <span class="nav-text">markdown是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工具"><span class="nav-number">2.</span> <span class="nav-text">准备工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习markdown"><span class="nav-number">3.</span> <span class="nav-text">学习markdown</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体"><span class="nav-number">4.</span> <span class="nav-text">字体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各级标题"><span class="nav-number">5.</span> <span class="nav-text">各级标题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网址链接"><span class="nav-number">6.</span> <span class="nav-text">网址链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#块引用"><span class="nav-number">7.</span> <span class="nav-text">块引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">8.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#段落"><span class="nav-number">9.</span> <span class="nav-text">段落</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表格"><span class="nav-number">10.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文字块or代码块"><span class="nav-number">11.</span> <span class="nav-text">文字块or代码块</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">coderwen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

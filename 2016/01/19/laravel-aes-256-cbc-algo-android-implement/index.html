@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="laravel,AES,AES-256-CBC,android,加密,解密," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="关于AES加密算法laravel中自带的加密算法采用AES-256-CBC的这种加密算法，准确的说AES才是一种加密算法，关于算法本身我没资格多说，256则指密钥长度为256bit，密钥长度越长当然是越安全相应的消耗的时间也越多，但对现在的计算机而言差距并不明显，CBC则指的是AES加密工作体制中的一种，常见的">
+<meta name="keywords" content="laravel,AES,AES-256-CBC,android,加密,解密">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在android端实现与laravel兼容的AES-256-CBC加密算法">
+<meta property="og:url" content="https://www.alwayscoder.com/2016/01/19/laravel-aes-256-cbc-algo-android-implement/index.html">
+<meta property="og:site_name" content="coderwen的踩坑日记">
+<meta property="og:description" content="关于AES加密算法laravel中自带的加密算法采用AES-256-CBC的这种加密算法，准确的说AES才是一种加密算法，关于算法本身我没资格多说，256则指密钥长度为256bit，密钥长度越长当然是越安全相应的消耗的时间也越多，但对现在的计算机而言差距并不明显，CBC则指的是AES加密工作体制中的一种，常见的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.alwayscoder.com/wp-content/uploads/2016/01/laravel-encrypt.jpg">
+<meta property="og:image" content="https://www.alwayscoder.com/wp-content/uploads/2016/01/android-decrypt-1.jpg">
+<meta property="og:image" content="https://www.alwayscoder.com/wp-content/uploads/2016/01/laravel-decrpt.jpg">
+<meta property="og:updated_time" content="2017-11-28T15:21:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在android端实现与laravel兼容的AES-256-CBC加密算法">
+<meta name="twitter:description" content="关于AES加密算法laravel中自带的加密算法采用AES-256-CBC的这种加密算法，准确的说AES才是一种加密算法，关于算法本身我没资格多说，256则指密钥长度为256bit，密钥长度越长当然是越安全相应的消耗的时间也越多，但对现在的计算机而言差距并不明显，CBC则指的是AES加密工作体制中的一种，常见的">
+<meta name="twitter:image" content="https://www.alwayscoder.com/wp-content/uploads/2016/01/laravel-encrypt.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.alwayscoder.com/2016/01/19/laravel-aes-256-cbc-algo-android-implement/"/>
+
+
+
+
+
+  <title>在android端实现与laravel兼容的AES-256-CBC加密算法 | coderwen的踩坑日记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">coderwen的踩坑日记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">coderwen的踩坑日记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2016/01/19/laravel-aes-256-cbc-algo-android-implement/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="coderwen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="coderwen的踩坑日记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在android端实现与laravel兼容的AES-256-CBC加密算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-19T08:12:28+08:00">
+                2016-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/laravel/" itemprop="url" rel="index">
+                    <span itemprop="name">laravel</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/laravel/php/" itemprop="url" rel="index">
+                    <span itemprop="name">php</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/laravel/php/security/" itemprop="url" rel="index">
+                    <span itemprop="name">security</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="关于AES加密算法"><a href="#关于AES加密算法" class="headerlink" title="关于AES加密算法"></a>关于AES加密算法</h2><p>laravel中自带的加密算法采用<a href="https://laravel.com/docs/5.1/encryption" target="_blank" rel="noopener">AES-256-CBC</a>的这种加密算法，准确的说<a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard" target="_blank" rel="noopener">AES</a>才是一种加密算法，关于算法本身我没资格多说，256则指密钥长度为256bit，密钥长度越长当然是越安全相应的消耗的时间也越多，但对现在的计算机而言差距并不明显，CBC则指的是AES加密工作体制中的一种，常见的<br><a id="more"></a></p>
+<ul>
+<li>电码本模式（Electronic Codebook Book (ECB)）</li>
+</ul>
+<p>这种模式是将整个明文分成若干段相同的小段，然后对每一小段进行加密</p>
+<ul>
+<li>密码分组链接模式（Cipher Block Chaining (CBC)）</li>
+</ul>
+<p>这种模式是先将明文切分成若干小段，然后每一小段与初始块或者上一段的密文段进行异或运算后，再与密钥进行加密</p>
+<ul>
+<li>计算器模式（Counter (CTR)）</li>
+</ul>
+<p>计算器模式不常见，在CTR模式中， 有一个自增的算子，这个算子用密钥加密之后的输出和明文异或的结果得到密文，相当于一次一密。这种加密方式简单快速，安全可靠，而且可以并行加密，但是 在计算器不能维持很长的情况下，密钥只能使用一次</p>
+<ul>
+<li>密码反馈模式（Cipher FeedBack (CFB)）</li>
+</ul>
+<p>不清楚</p>
+<ul>
+<li>输出反馈模式（Output FeedBack (OFB)</li>
+</ul>
+<p>不清楚</p>
+<p>其实CFB这种加密方式大家估计都用过，但是可能你没注意，在哪呢? 看看右下角的小飞机</p>
+<h2 id="laravel中的AES-256-CBC实现"><a href="#laravel中的AES-256-CBC实现" class="headerlink" title="laravel中的AES-256-CBC实现"></a>laravel中的AES-256-CBC实现</h2><p>废话说了一堆，我们来看看laravel的加密，加密算法主要由<code>Illuminate\Encryption\Encrypter</code>类实现，其中最主要的还是encrypt方法，我们来看看代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">encrypt</span><span class="params">($value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $iv = Str::randomBytes(<span class="keyword">$this</span>-&gt;getIvSize());</span><br><span class="line"></span><br><span class="line">    $value = openssl_encrypt(serialize($value), <span class="keyword">$this</span>-&gt;cipher, <span class="keyword">$this</span>-&gt;key, <span class="number">0</span>, $iv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ($value === <span class="keyword">false</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> EncryptException(<span class="string">'Could not encrypt the data.'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Once we have the encrypted value we will go ahead base64_encode the input</span></span><br><span class="line">    <span class="comment">// vector and create the MAC for the encrypted value so we can verify its</span></span><br><span class="line">    <span class="comment">// authenticity. Then, we'll JSON encode the data in a "payload" array.</span></span><br><span class="line">    $mac = <span class="keyword">$this</span>-&gt;hash($iv = base64_encode($iv), $value);</span><br><span class="line"></span><br><span class="line">    $json = json_encode(compact(<span class="string">'iv'</span>, <span class="string">'value'</span>, <span class="string">'mac'</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!is_string($json)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> EncryptException(<span class="string">'Could not encrypt the data.'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> base64_encode($json);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先通过randomBytes拿到了一个16位的随机byte数组作为IV(初始化向量)，然后通过调用open_ssl的工具函数，将字符串加密，接下来才是关键的问题，因为加密后的字符串可能在网络传输中被篡改，为了保证数据的安全性，laravel通过hmac_sha256算法使用base64编码后的iv，value计算出了MAC值，这个mac值是对于这次加密是独一无二的，解密的时候我们可以通过校验mac值是否正确来判断一个包是否是可信任的，接着将iv  value  mac打包成json数组，这就是laravel的加密流程，<strong>这有一点需要注意:使用open_ssl的时候我们将$value进行了序列化，laravel的Encrypter主要是用于内部加解密，或者PHP项目间的加解密，如果需要在android平台上解密成功，我们应该写一个子类继承Encrypter重写他的加密，去掉序列化，解密也一样</strong></p>
+<h2 id="Android-AES-256-CBC算法实现"><a href="#Android-AES-256-CBC算法实现" class="headerlink" title="Android AES-256-CBC算法实现"></a>Android AES-256-CBC算法实现</h2><p>首先打个预防针: 我不是android开发者，下面的代码只是实现了相关功能，如果要使用请自己再修改一下</p>
+<p>首先我们要实现AES算法，不可能从头去实现，我这里采用了github上的一个第三方包:<a href="https://github.com/scottyab/AESCrypt-Android" target="_blank" rel="noopener">AESCrypt-Android</a></p>
+<p>使用很简单我们在gradle里面加上<br><code>compile &#39;com.scottyab:aescrypt:0.0.1&#39;</code><br>    build完成后我们就可以调用了<br><code>import com.scottyab.aescrypt.AESCrypt;</code><br>    一句话即可加密<br><code>byte[] ciphers = AESCrypt.encrypt(_key, iv, your_plaintxt);</code></p>
+<p>但是实现与laravel兼容的AES-256-CBC还需要一点就是mac值的计算<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">calcMac</span><span class="params">(<span class="keyword">byte</span>[] iv, String value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> hash(getBaseEncode(iv), value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">hash</span><span class="params">(String iv, String value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> HmacSha256.hashHmac(iv.concat(value), AESHelper.key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里我模仿laravel将他弄成了两个函数，下面给出Hmacsha256的实现，这段代码是在stackoverflow上面找到的，原作者不太清楚，抱歉<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.crypto.Mac;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.SecretKeySpec;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HmacSha256</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String algo = <span class="string">"HmacSHA256"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">hashHmac</span><span class="params">(String msg, String keyString)</span> </span>&#123;</span><br><span class="line">        String digest = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            SecretKeySpec key = <span class="keyword">new</span> SecretKeySpec((keyString).getBytes(<span class="string">"UTF-8"</span>), algo);</span><br><span class="line">            Mac mac = Mac.getInstance(algo);</span><br><span class="line">            mac.init(key);</span><br><span class="line">            <span class="keyword">byte</span>[] bytes = mac.doFinal(msg.getBytes(<span class="string">"ASCII"</span>));</span><br><span class="line">            StringBuffer hash = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; bytes.length; i++) &#123;</span><br><span class="line">                String hex = Integer.toHexString(<span class="number">0xFF</span> &amp;amp; bytes[i]);</span><br><span class="line">                <span class="keyword">if</span> (hex.length() == <span class="number">1</span>) &#123;</span><br><span class="line">                    hash.append(<span class="string">'0'</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                hash.append(hex);</span><br><span class="line">            &#125;</span><br><span class="line">            digest = hash.toString();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> digest;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>至于json序列化我采用了google的龟速son Gson，这个你们喜欢什么用什么<br>最后给出最终实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.util.Base64;</span><br><span class="line"><span class="keyword">import</span> com.google.gson.Gson;</span><br><span class="line"><span class="keyword">import</span> com.google.gson.GsonBuilder;</span><br><span class="line"><span class="keyword">import</span> com.scottyab.aescrypt.AESCrypt;</span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.SecretKeySpec;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AESHelper</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> IV_SIZE = <span class="number">16</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String key = <span class="string">"ZhFtwdnId2Q9dv8lgo2RFhDYTSroQ8ua"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">decrypt</span><span class="params">(String encryptedText)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Gson gson = <span class="keyword">new</span> Gson();</span><br><span class="line">        encryptedText = <span class="keyword">new</span> String(Base64.decode(encryptedText, Base64.NO_WRAP));</span><br><span class="line">        EncryptObj encryptObj = gson.fromJson(encryptedText, EncryptObj.class);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!isValidMac(encryptObj)) &#123;</span><br><span class="line">            <span class="comment">//TODO  handle exception</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"isvalid mac"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        SecretKeySpec key = getSecretKeySpec();</span><br><span class="line">        <span class="keyword">byte</span>[] iv = getBaseDecode(<span class="keyword">new</span> String(encryptObj.getIv()));</span><br><span class="line">        <span class="keyword">byte</span>[] decodedValue = getBaseDecode(<span class="keyword">new</span> String(encryptObj.getValue()));</span><br><span class="line">        <span class="keyword">byte</span>[] plaintext = AESCrypt.decrypt(key, iv, decodedValue);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(plaintext);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">encrypt</span><span class="params">(String plainText)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">byte</span>[] iv = getIV();</span><br><span class="line">    SecretKeySpec _key = <span class="keyword">new</span> SecretKeySpec(key.getBytes(), <span class="string">"AES"</span>);</span><br><span class="line">    <span class="keyword">byte</span>[] ciphers = AESCrypt.encrypt(_key, iv, plainText.getBytes());</span><br><span class="line">    String mac = calcMac(iv, getBaseEncode(ciphers));</span><br><span class="line">    EncryptObj encryptObj = <span class="keyword">new</span> EncryptObj(getBaseEncode(iv), getBaseEncode(ciphers), mac);</span><br><span class="line">    Gson json = <span class="keyword">new</span> GsonBuilder().disableHtmlEscaping().create();</span><br><span class="line">    String encrypted = getBaseEncode(json.toJson(encryptObj).getBytes());</span><br><span class="line">    <span class="keyword">return</span> encrypted;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> SecretKeySpec <span class="title">getSecretKeySpec</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> SecretKeySpec(key.getBytes(), <span class="string">"AES"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//get base64encode</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">getBaseEncode</span><span class="params">(<span class="keyword">byte</span>[] string)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Base64.encodeToString(string, Base64.NO_WRAP);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//get base64decode</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] getBaseDecode(String string) &#123;</span><br><span class="line">    <span class="keyword">return</span> Base64.decode(string, Base64.NO_WRAP);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//get random iv</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] getIV() &#123;</span><br><span class="line">    <span class="keyword">return</span> getRandomBytes(IV_SIZE);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//get random bytes</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] getRandomBytes(<span class="keyword">int</span> len) &#123;</span><br><span class="line">    Random rnd = <span class="keyword">new</span> Random();</span><br><span class="line">    <span class="keyword">byte</span>[] _byte = <span class="keyword">new</span> <span class="keyword">byte</span>[len];</span><br><span class="line">    rnd.nextBytes(_byte);</span><br><span class="line">    <span class="keyword">return</span> _byte;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//calculate mac</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">calcMac</span><span class="params">(<span class="keyword">byte</span>[] iv, String value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> hash(getBaseEncode(iv), value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//use hmacsha256 get hash value</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">hash</span><span class="params">(String iv, String value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> HmacSha256.hashHmac(iv.concat(value), AESHelper.key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//verify mac</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Boolean <span class="title">isValidMac</span><span class="params">(EncryptObj encryptObj)</span> </span>&#123;</span><br><span class="line">    String randomStr = <span class="keyword">new</span> String(getRandomBytes(IV_SIZE));</span><br><span class="line">    String calcMac = HmacSha256.hashHmac(hash(<span class="keyword">new</span> String(encryptObj.getIv()), <span class="keyword">new</span> String(encryptObj.getValue())), randomStr);</span><br><span class="line">    <span class="keyword">return</span> calcMac.equals(HmacSha256.hashHmac(encryptObj.getMac(), randomStr));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="PHP端实现"><a href="#PHP端实现" class="headerlink" title="PHP端实现"></a>PHP端实现</h2><p>主要重写了加密和解密函数<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Str</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Contracts</span>\<span class="title">Encryption</span>\<span class="title">DecryptException</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Contracts</span>\<span class="title">Encryption</span>\<span class="title">EncryptException</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Encryption</span>\<span class="title">Encrypter</span> <span class="title">as</span> <span class="title">BaseEncrypter</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Encrypter</span> <span class="keyword">extends</span> <span class="title">BaseEncrypter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($cipher = <span class="string">'AES-256-CBC'</span>)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $key = env(<span class="string">'APP_KEY'</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">static</span>::supported($key, $cipher)) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;key = $key;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;cipher = $cipher;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">'The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths.'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">encrypt</span><span class="params">($value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $iv = Str::randomBytes(<span class="keyword">$this</span>-&gt;getIvSize());</span><br><span class="line"></span><br><span class="line">        $value = openssl_encrypt($value, <span class="keyword">$this</span>-&gt;cipher, <span class="keyword">$this</span>-&gt;key, <span class="number">0</span>, $iv);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ($value === <span class="keyword">false</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> EncryptException(<span class="string">'Could not encrypt the data.'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Once we have the encrypted value we will go ahead base64_encode the input</span></span><br><span class="line">        <span class="comment">// vector and create the MAC for the encrypted value so we can verify its</span></span><br><span class="line">        <span class="comment">// authenticity. Then, we'll JSON encode the data in a "payload" array.</span></span><br><span class="line">        $mac = <span class="keyword">$this</span>-&gt;hash($iv = base64_encode($iv), $value);</span><br><span class="line"></span><br><span class="line">        $json = json_encode(compact(<span class="string">'iv'</span>, <span class="string">'value'</span>, <span class="string">'mac'</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!is_string($json)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> EncryptException(<span class="string">'Could not encrypt the data.'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> base64_encode($json);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">decrypt</span><span class="params">($payload)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $payload = <span class="keyword">$this</span>-&gt;getJsonPayload($payload);</span><br><span class="line">        $iv = base64_decode($payload[<span class="string">'iv'</span>]);</span><br><span class="line"></span><br><span class="line">        $decrypted = openssl_decrypt($payload[<span class="string">'value'</span>], <span class="keyword">$this</span>-&gt;cipher, <span class="keyword">$this</span>-&gt;key, <span class="number">0</span>, $iv);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ($decrypted === <span class="keyword">false</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> DecryptException(<span class="string">'Could not decrypt the data.'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> $decrypted;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>我们看看能否加解密成功</p>
+<p>首先我们把laravel env中的 APP_KEY的值粘贴到android AESHelp key</p>
+<p>我们现在artisan tinker里面使用我们重写Encrypter加密 “hello laravel aes-256-cbc”</p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/01/laravel-encrypt.jpg"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/01/laravel-encrypt.jpg" alt="laravel-encrypt"></a></p>
+<p>我们把加密后的串粘贴到android端，试试解密</p>
+<p>我贴出我的测试代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AESTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">encrypt</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String plainText = <span class="string">"hello android aes-256-cbc"</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            String cipher = AESHelper.encrypt(plainText);</span><br><span class="line">            Log.i(<span class="string">"cipher"</span>, cipher);</span><br><span class="line">            Log.i(<span class="string">"decrypt android plain"</span>, AESHelper.decrypt(cipher));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">decrypt</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String cipher = <span class="string">"eyJpdiI6IjN4cXU0RllyYnZibnZ3dlRmWDc2bEE9PSIsInZhbHVlIjoiUFhWcXpKNkFnN2NPMjZ1amFyVDhzSzRwT1FIWmZoWlMrMlN0NjM5N3ZFND0iLCJtYWMiOiIzYzc0ZWVhZTQyNGY5ZmVjNDU2YmE3MWEyZTU0Y2I5YzU3MmVjYzMxM2IxMmFmOWQ3YmY4MTA1YWIwMDUxNzBkIn0="</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String plaintext = AESHelper.decrypt(cipher);</span><br><span class="line">        Log.i(<span class="string">"decrypt laravel plain"</span>, plaintext);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>看看log的输出</p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/01/android-decrypt-1.jpg"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/01/android-decrypt-1.jpg" alt="android-decrypt"></a></p>
+<p>完美的解密</p>
+<p>我们再来试试android加密 laravel解密</p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/01/laravel-decrpt.jpg"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/01/laravel-decrpt.jpg" alt="laravel-decrypt"></a></p>
+<p>同样解密成功</p>
+<p>最后提醒大家，AES是对称加密，任何一端都得妥善保管KEY，当然不能学我这样明文放到代码里面，反编译太容易 了，如果大家加密的文本长度不长的话尽量采用RSA非对称加密，方便也好实现，折腾了这么久，最后项目也没采用这个加密方法，因为最后iOS端没找到完美实现，如果有同学实现了可以告诉我，甩个gist就行，毕竟折腾了好一段时间，所以还是把结果写出来给需要的人</p>
+<p>最后补充外国友人需要的<strong>EncryptObj</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EncryptObj</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String iv;</span><br><span class="line">    <span class="keyword">private</span> String value;</span><br><span class="line">    <span class="keyword">private</span> String mac;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">EncryptObj</span><span class="params">(String iv, String value, String mac)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.iv = iv;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">        <span class="keyword">this</span>.mac = mac;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">byte</span>[] getIv() &#123;</span><br><span class="line">        <span class="keyword">return</span> iv.getBytes();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">byte</span>[] getValue() &#123;</span><br><span class="line">        <span class="keyword">return</span> value.getBytes();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMac</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mac;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/laravel/" rel="tag"># laravel</a>
+          
+            <a href="/tags/AES/" rel="tag"># AES</a>
+          
+            <a href="/tags/AES-256-CBC/" rel="tag"># AES-256-CBC</a>
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+            <a href="/tags/加密/" rel="tag"># 加密</a>
+          
+            <a href="/tags/解密/" rel="tag"># 解密</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/02/analyze-how-a-laravel-instance-build-with-source-code-section-2-part2/" rel="next" title="结合源码分析Laravel实例$App是怎么一步步构建的(下)[part 2]">
+                <i class="fa fa-chevron-left"></i> 结合源码分析Laravel实例$App是怎么一步步构建的(下)[part 2]
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/06/using-laravel-and-dingo-build-your-restful-api/" rel="prev" title="使用laravel+dingo打造你的RESTful接口">
+                使用laravel+dingo打造你的RESTful接口 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">coderwen</p>
+              <p class="site-description motion-element" itemprop="description">闷声学技术，比西方记者快，比华莱士高</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于AES加密算法"><span class="nav-number">1.</span> <span class="nav-text">关于AES加密算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#laravel中的AES-256-CBC实现"><span class="nav-number">2.</span> <span class="nav-text">laravel中的AES-256-CBC实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-AES-256-CBC算法实现"><span class="nav-number">3.</span> <span class="nav-text">Android AES-256-CBC算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP端实现"><span class="nav-number">4.</span> <span class="nav-text">PHP端实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">5.</span> <span class="nav-text">测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">coderwen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

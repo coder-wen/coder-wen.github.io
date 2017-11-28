@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,https,namecheap,nginx,web," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近心血来潮在namecheap买下了域名，搭起了博客以记录码路上的点点滴滴，购买域名的时候发现SSL Cert第一年只需1.99$，毫不犹豫地购买了，折腾了小半天，发现网上的教程比较老，第一篇博客就记录下配置的过程。 PS:因为我已经配置好了，有些截图不能重现，部分流程可以结合namecheap的帮助文档配置">
+<meta name="keywords" content="linux,https,namecheap,nginx,web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="折腾之Nginx配置namecheap提供的comodoSSL">
+<meta property="og:url" content="https://www.alwayscoder.com/2015/12/20/how-to-config-namecheap-comodo-ssl-on-nginx/index.html">
+<meta property="og:site_name" content="coderwen的踩坑日记">
+<meta property="og:description" content="最近心血来潮在namecheap买下了域名，搭起了博客以记录码路上的点点滴滴，购买域名的时候发现SSL Cert第一年只需1.99$，毫不犹豫地购买了，折腾了小半天，发现网上的教程比较老，第一篇博客就记录下配置的过程。 PS:因为我已经配置好了，有些截图不能重现，部分流程可以结合namecheap的帮助文档配置">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.alwayscoder.com/wp-content/uploads/2015/12/finish.jpg">
+<meta property="og:updated_time" content="2017-11-28T15:25:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="折腾之Nginx配置namecheap提供的comodoSSL">
+<meta name="twitter:description" content="最近心血来潮在namecheap买下了域名，搭起了博客以记录码路上的点点滴滴，购买域名的时候发现SSL Cert第一年只需1.99$，毫不犹豫地购买了，折腾了小半天，发现网上的教程比较老，第一篇博客就记录下配置的过程。 PS:因为我已经配置好了，有些截图不能重现，部分流程可以结合namecheap的帮助文档配置">
+<meta name="twitter:image" content="https://www.alwayscoder.com/wp-content/uploads/2015/12/finish.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.alwayscoder.com/2015/12/20/how-to-config-namecheap-comodo-ssl-on-nginx/"/>
+
+
+
+
+
+  <title>折腾之Nginx配置namecheap提供的comodoSSL | coderwen的踩坑日记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">coderwen的踩坑日记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">coderwen的踩坑日记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2015/12/20/how-to-config-namecheap-comodo-ssl-on-nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="coderwen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="coderwen的踩坑日记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">折腾之Nginx配置namecheap提供的comodoSSL</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-12-20T23:10:48+08:00">
+                2015-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近心血来潮在namecheap买下了域名，搭起了博客以记录码路上的点点滴滴，购买域名的时候发现SSL Cert第一年只需1.99$，毫不犹豫地购买了，折腾了小半天，发现网上的教程比较老，第一篇博客就记录下配置的过程。</p>
+<p>PS:因为我已经配置好了，有些截图不能重现，部分流程可以结合<a href="https://www.namecheap.com/support/knowledgebase/article.aspx/794/67/how-do-i-activate-an-ssl-certificate" target="_blank" rel="noopener">namecheap的帮助文档配置</a><br><a id="more"></a></p>
+<h2 id="生成证书"><a href="#生成证书" class="headerlink" title="生成证书"></a>生成证书</h2><p>首先登录到namecheap的控制面板</p>
+<p>如果你还没有active SSL Cert，依次点击Product List-&gt;SSL Certificates-&gt;active</p>
+<p>然后需要填写一个表单，首先需要粘贴服务器生成的CSR code</p>
+<p>问题来了CSR code如何生成呢，进入服务器终端，确保已经安装openssl，</p>
+<p>1.通过openssl 生成2048位的密钥<br><code>openssl genrsa -out privkey.key 2048</code><br>2.通过刚才生成的2048位私钥生成对应的csr文件<br><code>openssl req -new -key privkey.key -out cert.csr</code><br>3.将csr内容输出到屏幕上以便粘贴到表单提交<br><code>cat cert.csr</code><br>粘贴好CSR code后，选择绑定域名，如果你账户下有多个域名请选择你需要SSL证书的域名，<strong>注意 www.hello.com 和 hello.com不是一个域名</strong></p>
+<p>web server选择含Nginx的一项</p>
+<p>然后加密算法默认，submit</p>
+<p>然后是选择DVC验证方式，namecheap提供了3种方式</p>
+<ul>
+<li>Email</li>
+<li>HTTP BASED</li>
+<li>DNS-BASED<br>至于这三种的区别官方也有明确说明：</li>
+</ul>
+<blockquote>
+<p>For email validation, select an email address to which the approval email will be sent. For security reasons, the approval email can only be sent to a generic email associated with the domain name (e.g., webmaster@, postmaster@, hostmaster@, administrator@, admin@, etc.) or to the registered Whois email address.</p>
+<p>Please note that if you do not select an email address, certificate activation will fail with a “Purchase Error” status.</p>
+<p>For HTTP-based validation, you will need to upload a certain text file into the root directory of your website to have the certificate issued. You’ll then be able to download the certificate file in your account after the order is submitted to the Certificate Authority for activation.</p>
+<p>For DNS-based validation, you must create a special CNAME record in the DNS records for your domain. This record will be also provided after the activation<br>不想深纠的话可以直接和我一样选择HTTP based 验证，再提交了</p>
+</blockquote>
+<p>接着继续填写管理员信息表单，含有OPTIONAL选项都可以不用填写</p>
+<p>最重要的还是最后一项Email地址，该邮箱会用于接收comodo公司制作好的证书</p>
+<p>接着我们需要上传http 验证文件,具体过程可以参照<a href="https://www.namecheap.com/support/knowledgebase/article.aspx/9637/68/how-can-i-complete-the-domain-control-validation-dcv-for-my-ssl-" target="_blank" rel="noopener">namecheap关于httpbase验证的帮助文档</a></p>
+<p>按照官方图示下载了验证的txt文件后，将其上传到你需要SSL的网站的根目录并且此txt文件能够被访问，例如验证文件为1.txt,域名为www.hello.com  则通过 www.hello.com/1.txt 能够访问</p>
+<p>经过大约10来分钟的时间，证书就差不多签发完毕发送到你的邮箱，附件中会有打包为zip压缩包的证书，将其传送到服务器合适的目录</p>
+<p>通过unzip命令解压<br><code>unzip domain_com.zip</code><br>然后大家会开到有两个文件</p>
+<p><code>your_domain.ca-bundle  以及 your_domain.crt</code></p>
+<p>我们需要把这两个文件合到一个文件里面以供nginx配置文件使用</p>
+<p>使用cat和重定向轻松完成</p>
+<p><code>cat your_domain_com.crt  your_domain_com.ca-bundle &gt;&gt;cert_chain.crt</code><br>注意，crt文件一定要在bundle前面，不要nginx匹配私钥的时候会报错</p>
+<h2 id="配置服务器"><a href="#配置服务器" class="headerlink" title="配置服务器"></a>配置服务器</h2><p>至此，只需再修改nginx相关配置文件就能享受到高达上的https了</p>
+<p>确定nginx含有ssl模块，如果没有请重新安装便宜</p>
+<p>进入到nginx 配置文件目录，一般在/etc/nginx/conf/下</p>
+<p>修改你需要适用ssl的 server block</p>
+<p>示例如下</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">443</span>;</span><br><span class="line">    <span class="comment">#同时监听80端口，以便http跳转https</span></span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">ssl</span> <span class="literal">on</span>;</span><br><span class="line">    <span class="attribute">ssl_certificate</span> /path/to/your_cert_chain.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /path/to/your_privkey.key;</span><br><span class="line">    <span class="attribute">server_name</span>  www.your_domin.com;</span><br><span class="line">    <span class="comment">#.......你的其他配置</span></span><br><span class="line">    <span class="comment">#通过nginx 497错误 将http请求全部重定向到https</span></span><br><span class="line">    <span class="attribute">error_page</span> <span class="number">497</span> https://<span class="variable">$server_name</span><span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后记得重启nginx服务器<br><code>nginx -s reload</code><br>刷新页面，大功告成</p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2015/12/finish.jpg"><img src="https://www.alwayscoder.com/wp-content/uploads/2015/12/finish.jpg" alt="ssl配置完成"></a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/https/" rel="tag"># https</a>
+          
+            <a href="/tags/namecheap/" rel="tag"># namecheap</a>
+          
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
+          
+            <a href="/tags/web/" rel="tag"># web</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/21/offline-install-laravel-homestead/" rel="prev" title="离线安装&配置laravel开发环境homestead">
+                离线安装&配置laravel开发环境homestead <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">coderwen</p>
+              <p class="site-description motion-element" itemprop="description">闷声学技术，比西方记者快，比华莱士高</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#生成证书"><span class="nav-number">1.</span> <span class="nav-text">生成证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置服务器"><span class="nav-number">2.</span> <span class="nav-text">配置服务器</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">coderwen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

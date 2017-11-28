@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="nginx,lbs,load banlance," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言在上一节nginx负载均衡实践(1)-初识中我带领大家对nginx的负载均衡策略以及配置有了一个初步的认识，光说不练假把式，今天我们将配置一个helloworld级别的负载均衡服务器，通过实践让大家知道如何配置负载均衡以及展示几种不同的负载均衡策略的效果。">
+<meta name="keywords" content="nginx,lbs,load banlance">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx负载均衡实践(2)－helloworld">
+<meta property="og:url" content="https://www.alwayscoder.com/2016/09/18/nginx-load-banlance-practice-2-helloworld/index.html">
+<meta property="og:site_name" content="coderwen的踩坑日记">
+<meta property="og:description" content="前言在上一节nginx负载均衡实践(1)-初识中我带领大家对nginx的负载均衡策略以及配置有了一个初步的认识，光说不练假把式，今天我们将配置一个helloworld级别的负载均衡服务器，通过实践让大家知道如何配置负载均衡以及展示几种不同的负载均衡策略的效果。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-28T13:10:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nginx负载均衡实践(2)－helloworld">
+<meta name="twitter:description" content="前言在上一节nginx负载均衡实践(1)-初识中我带领大家对nginx的负载均衡策略以及配置有了一个初步的认识，光说不练假把式，今天我们将配置一个helloworld级别的负载均衡服务器，通过实践让大家知道如何配置负载均衡以及展示几种不同的负载均衡策略的效果。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.alwayscoder.com/2016/09/18/nginx-load-banlance-practice-2-helloworld/"/>
+
+
+
+
+
+  <title>nginx负载均衡实践(2)－helloworld | coderwen的踩坑日记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">coderwen的踩坑日记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">coderwen的踩坑日记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2016/09/18/nginx-load-banlance-practice-2-helloworld/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="coderwen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="coderwen的踩坑日记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">nginx负载均衡实践(2)－helloworld</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-18T22:20:18+08:00">
+                2016-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在上一节<a href="https://www.alwayscoder.com/nginx-load-balance-practice-1-quick-tour/">nginx负载均衡实践(1)-初识</a>中我带领大家对nginx的负载均衡策略以及配置有了一个初步的认识，光说不练假把式，今天我们将配置一个helloworld级别的负载均衡服务器，通过实践让大家知道如何配置负载均衡以及展示几种不同的负载均衡策略的效果。</p>
+<a id="more"></a>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
+<li>装有docker的电脑一台</li>
+</ul>
+<h2 id="配置nginx-docker镜像"><a href="#配置nginx-docker镜像" class="headerlink" title="配置nginx docker镜像"></a>配置nginx docker镜像</h2><p>毕竟是个练手的东西，大家不可能为了看看怎么配置nginx负载均衡就去买几台云服务器，当然你钱太多了当我没说。所以我们所有的实验都是在docker下进行。</p>
+<p>首先我们需要下载nginx官方docker镜像，如果喜欢GUI，请使用kitematic进行下载，如果你喜欢命令行,请输入以下命令拉取nginx官方docker镜像</p>
+<p>不跟上tag的话我们默认拉取最新版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br><span class="line">docker run -d  nginx</span><br></pre></td></tr></table></figure>
+<p>同样的你也可以使用kitematic直接点击三角形运行容器。</p>
+<p>你可能要问为什么没有映射端口，因为nginx官方的这个镜像没有vim，待会儿要修改配置文件的话比较麻烦，我们先给他装上vim。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it nginx bash</span><br></pre></td></tr></table></figure>
+<p>这样我们就拿到了nginx的终端。</p>
+<p>二话不说装个vim先，如果你是emacs党该干啥不用我再说了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install -y vim</span><br></pre></td></tr></table></figure>
+<p>可能有点慢，忍不了就换apt源或者走代理我就不再多说了。</p>
+<p>紧接着我们需要把更改给提交了，这样以后通过该镜像创建的nginx服务器就都带有vim了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+<p>通过docker ps命令我们可以找到nginx容器的id，大家都不一样我也没必要贴出来了。</p>
+<p>我的id是69364bad92eb </p>
+<p>对我来说我的提交更改命令就是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit 69364bad92eb nginx:latest</span><br></pre></td></tr></table></figure>
+<p>回车提交，我们的nginx容器就是带有vim的了。</p>
+<h2 id="运行多个nginx容器"><a href="#运行多个nginx容器" class="headerlink" title="运行多个nginx容器"></a>运行多个nginx容器</h2><p>为了演示负载均衡我们需要运行多个nginx服务器。<br>首先我们得有一台作为负载均衡的服务器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -P8080:80 --name lbs nginx</span><br></pre></td></tr></table></figure>
+<p>这样一个名为lbs的nginx容器就启动了，并且我们将他的80端口映射到了物理机上的8080端口方便我们待会的测试。</p>
+<p>接下来我们一口气开5台应用实例服务器，当然我们并没有什么所谓的”应用”待会儿我们就简单的输出我是几号机器就ok了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name serv1 nginx</span><br><span class="line">docker run -d --name serv2 nginx</span><br><span class="line">docker run -d --name serv3 nginx</span><br><span class="line">docker run -d --name serv4 nginx</span><br><span class="line">docker run -d --name serv5 nginx</span><br></pre></td></tr></table></figure>
+<p>这样5台服务器就启动好了。</p>
+<p>如果大家还对上一节我们讲配置文件还有印象的话，就知道我们得需要把这5台机器的地址放到upstream指令块里，问题来了怎么知道这5台的ip地址呢。</p>
+<p>如果你尝试了ifconfig会发现这个命令是不存在的，官方的镜像知识一个ubuntu的缩减版。所以我们没必要在容器上面折腾，docker是内置了方法的。</p>
+<p>我们将一段脚本抽成bash函数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">dockip</span></span>() &#123;</span><br><span class="line">          docker inspect --format <span class="string">'&#123;&#123; .NetworkSettings.IPAddress &#125;&#125;'</span> <span class="string">"<span class="variable">$@</span>"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们把上面的这段脚本加入到bashrc或zshrc里面我们就能使用了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dockip serv1</span><br></pre></td></tr></table></figure>
+<p>是不是输出了serv1的ip地址。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ dockip serv1</span><br><span class="line">172.17.0.4</span><br></pre></td></tr></table></figure>
+<p>我们将5台容器的地址都记录下来。</p>
+<p>如果你嫌麻烦可以写个bash for循环就能拿到所有的ip了。</p>
+<h2 id="配置负载均衡服务器"><a href="#配置负载均衡服务器" class="headerlink" title="配置负载均衡服务器"></a>配置负载均衡服务器</h2><p>接下来我们需要配置lbs服务器</p>
+<p>首先还是进入终端</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it lbs bash</span><br><span class="line">vim /etc/nginx/conf.d/default.conf</span><br></pre></td></tr></table></figure>
+<p>我们location / 为以下内容</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line">         <span class="attribute">proxy_pass</span> http://hello;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将所有对根目录的请求代理到名为hello的server group里(马上配置)</p>
+<p>接下来修改upstream相关的配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+<p>在include关键字前面添加如下内容，<strong>ip地址不一定与我相同</strong></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">upstream</span> hello &#123;</span><br><span class="line">    	<span class="attribute">server</span> <span class="number">172.17.0.4</span>;</span><br><span class="line">    	<span class="attribute">server</span> <span class="number">172.17.0.5</span>;</span><br><span class="line">    	<span class="attribute">server</span> <span class="number">172.17.0.6</span>;</span><br><span class="line">    	<span class="attribute">server</span> <span class="number">172.17.0.7</span>;</span><br><span class="line">    	<span class="attribute">server</span> <span class="number">172.17.0.8</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重新载入nginx配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+<h2 id="修改应用实例服务器"><a href="#修改应用实例服务器" class="headerlink" title="修改应用实例服务器"></a>修改应用实例服务器</h2><p>我们需要修改应用实例服务器以方便测试的时候区分nginx具体分发的服务器。</p>
+<p>以serv1为例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it serv1 bash</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"hello server 1"</span>&gt;/usr/share/nginx/html/index.html</span><br></pre></td></tr></table></figure>
+<p>这样serv1中默认index就会输出”hello server 1”方便我们区分。</p>
+<p>依次对1-5号服务器进行修改。</p>
+<h2 id="测试负载均衡"><a href="#测试负载均衡" class="headerlink" title="测试负载均衡"></a>测试负载均衡</h2><p>我们现在并没有指定具体的负载均衡策略，所以默认为轮训。</p>
+<p>我们在物理机上通过curl加上一点bash的for循环就能测试。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> 1 2 3 4 5 6 7 8 9 10</span><br><span class="line"><span class="keyword">do</span> curl localhost:9999</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>我们对lbs服务器进行了10次请求。我们看看输出了什么。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ <span class="keyword">for</span> i <span class="keyword">in</span> 1 2 3 4 5 6 7 8 9 10</span><br><span class="line"><span class="keyword">do</span> curl localhost:9999</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">hello server 1</span><br><span class="line">hello server 2</span><br><span class="line">hello server 3</span><br><span class="line">hello server 4</span><br><span class="line">hello server 5</span><br><span class="line">hello server 1</span><br><span class="line">hello server 2</span><br><span class="line">hello server 3</span><br><span class="line">hello server 4</span><br><span class="line">hello server 5</span><br></pre></td></tr></table></figure>
+<p>果然是轮询，nginx给每个服务器都平均地分发了两次请求。</p>
+<p>由于ip-hash是一个基于ip的算法，我们不好测试。</p>
+<p>最少连接需要服务器处理的时间比较长才能有明显区别我们这个简单的一句话并不满足条件。所以我们就测试一下加权的轮询。</p>
+<p>我们修改lbs的负载均衡策略将1号服务器的权设为5。</p>
+<p>同样的10次请求看看发生了什么变化</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ <span class="keyword">for</span> i <span class="keyword">in</span> 1 2 3 4 5 6 7 8 9 10</span><br><span class="line">    <span class="keyword">do</span> curl localhost:9999</span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    hello server 1</span><br><span class="line">    hello server 2</span><br><span class="line">    hello server 1</span><br><span class="line">    hello server 3</span><br><span class="line">    hello server 1</span><br><span class="line">    hello server 4</span><br><span class="line">    hello server 1</span><br><span class="line">    hello server 5</span><br><span class="line">    hello server 1</span><br><span class="line">    hello server 1</span><br></pre></td></tr></table></figure>
+<p>可以看到1号服务器分发了5次请求剩下的5次请求被平均分发到1、2、3、4、5</p>
+<p>这就是加权轮询。</p>
+<p>nginx负载均衡的初次实践就到此为止了。接下来我们会进一步的探究nginx的负载均衡的诸多细节。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
+          
+            <a href="/tags/lbs/" rel="tag"># lbs</a>
+          
+            <a href="/tags/load-banlance/" rel="tag"># load banlance</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/17/nginx-load-balance-practice-1-quick-tour/" rel="next" title="nginx负载均衡实践(1)－初识">
+                <i class="fa fa-chevron-left"></i> nginx负载均衡实践(1)－初识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/12/how-to-write-composer-based-vendor-package-for-laravel-applications/" rel="prev" title="如何为laravel项目编写基于composer的第三方扩展包">
+                如何为laravel项目编写基于composer的第三方扩展包 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">coderwen</p>
+              <p class="site-description motion-element" itemprop="description">闷声学技术，比西方记者快，比华莱士高</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">2.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置nginx-docker镜像"><span class="nav-number">3.</span> <span class="nav-text">配置nginx docker镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行多个nginx容器"><span class="nav-number">4.</span> <span class="nav-text">运行多个nginx容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置负载均衡服务器"><span class="nav-number">5.</span> <span class="nav-text">配置负载均衡服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改应用实例服务器"><span class="nav-number">6.</span> <span class="nav-text">修改应用实例服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试负载均衡"><span class="nav-number">7.</span> <span class="nav-text">测试负载均衡</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">coderwen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

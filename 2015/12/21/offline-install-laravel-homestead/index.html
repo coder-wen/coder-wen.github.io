@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="laravel,php,linux,homestead," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="2016年9月更新  下载homestead镜像开发laravel的本地环境当然是用官方提供的homestead vagrant镜像 优势不用多说，但是鉴于国内特殊原因，homestead通过命令行在线安装几乎是不可能完成的任务，只能选择先下载homestead镜像，再手动安装">
+<meta name="keywords" content="laravel,php,linux,homestead">
+<meta property="og:type" content="article">
+<meta property="og:title" content="离线安装&amp;配置laravel开发环境homestead">
+<meta property="og:url" content="https://www.alwayscoder.com/2015/12/21/offline-install-laravel-homestead/index.html">
+<meta property="og:site_name" content="coderwen的踩坑日记">
+<meta property="og:description" content="2016年9月更新  下载homestead镜像开发laravel的本地环境当然是用官方提供的homestead vagrant镜像 优势不用多说，但是鉴于国内特殊原因，homestead通过命令行在线安装几乎是不可能完成的任务，只能选择先下载homestead镜像，再手动安装">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.alwayscoder.com/wp-content/uploads/2015/12/laravel-new-homepage.png">
+<meta property="og:updated_time" content="2017-11-28T15:30:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="离线安装&amp;配置laravel开发环境homestead">
+<meta name="twitter:description" content="2016年9月更新  下载homestead镜像开发laravel的本地环境当然是用官方提供的homestead vagrant镜像 优势不用多说，但是鉴于国内特殊原因，homestead通过命令行在线安装几乎是不可能完成的任务，只能选择先下载homestead镜像，再手动安装">
+<meta name="twitter:image" content="https://www.alwayscoder.com/wp-content/uploads/2015/12/laravel-new-homepage.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.alwayscoder.com/2015/12/21/offline-install-laravel-homestead/"/>
+
+
+
+
+
+  <title>离线安装&配置laravel开发环境homestead | coderwen的踩坑日记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">coderwen的踩坑日记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">coderwen的踩坑日记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2015/12/21/offline-install-laravel-homestead/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="coderwen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="coderwen的踩坑日记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">离线安装&配置laravel开发环境homestead</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-12-21T01:53:36+08:00">
+                2015-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/laravel/" itemprop="url" rel="index">
+                    <span itemprop="name">laravel</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/laravel/php/" itemprop="url" rel="index">
+                    <span itemprop="name">php</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>2016年9月更新</p>
+<hr>
+<h2 id="下载homestead镜像"><a href="#下载homestead镜像" class="headerlink" title="下载homestead镜像"></a>下载homestead镜像</h2><p>开发laravel的本地环境当然是用官方提供的homestead vagrant镜像</p>
+<p>优势不用多说，但是鉴于国内特殊原因，homestead通过命令行在线安装几乎是不可能完成的任务，只能选择先下载homestead镜像，再手动安装<br><a id="more"></a><br><strong>如果你还没有homestead镜像，如果你有一台境外主机，通过主机-&gt;迅雷-&gt;下载,如果没有主机，可以上百度网盘搜索，如果还没有，请留言，我用我的主机给你个临时下载地址。主机下载地址</strong></p>
+<p><a href="https://atlas.hashicorp.com/laravel/boxes/homestead/versions/0.5.0/providers/virtualbox.box" target="_blank" rel="noopener">https://atlas.hashicorp.com/laravel/boxes/homestead/versions/0.5.0/providers/virtualbox.box</a></p>
+<h2 id="离线安装homestead"><a href="#离线安装homestead" class="headerlink" title="离线安装homestead"></a>离线安装homestead</h2><p>假设大家已经拿到了homestead镜像，首先确保安装了以下软件的最新版本，</p>
+<ul>
+<li><a href="https://www.vagrantup.com/downloads.html" target="_blank" rel="noopener">vagrant</a></li>
+<li><a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="noopener">virtualbox</a></li>
+<li><a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git</a><br><strong>ps:vmware也可以的，一方面我用的是virtualbox，另一方面virtualbox免费</strong></li>
+</ul>
+<p>以windows为例，linux大同小异</p>
+<p>将镜像放到合适的目录然后cd到镜像所在目录</p>
+<p>1.我们先来看看vagrant box 有哪些选项</p>
+<p><code>vagrant box add  -h</code><br>我们得知最主要的用法如下<br><code>Usage: vagrant box add [options] &amp;lt;name, url, or path&amp;gt;</code><br>既然是离线安装我们直接当然通过path来添加box</p>
+<p>输入如下命令<br><code>vagrant box add  laravel/homestead-demo virtualbox.box</code><br>看到success添加盒子就成功了</p>
+<hr>
+<h2 id="更新！！！！"><a href="#更新！！！！" class="headerlink" title="更新！！！！"></a>更新！！！！</h2><p>如果出现版本错误，请在virtualbox.box镜像所在目录创建metadata.json</p>
+<p>输入以下内容<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"laravel/homestead"</span>,</span><br><span class="line">        <span class="attr">"versions"</span>: [&#123;</span><br><span class="line">            <span class="attr">"version"</span>: <span class="string">"0.5.0"</span>,</span><br><span class="line">            <span class="attr">"providers"</span>: [&#123;</span><br><span class="line">                <span class="attr">"name"</span>: <span class="string">"virtualbox"</span>,</span><br><span class="line">                <span class="attr">"url"</span>: <span class="string">"file://virtualbox.box"</span></span><br><span class="line">            &#125;]</span><br><span class="line">        &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后输入以下命令添加box<br><code>vagrant box add metadata.json</code></p>
+<p>可以通过如下命令查看安装的box<br><code>vagrant box list</code><br>可以看到我装了三个box<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">D:\demo&amp;gt;vagrant box list</span><br><span class="line">laravel/homestead      (virtualbox, 0)</span><br><span class="line">laravel/homestead-7    (virtualbox, 0)</span><br><span class="line">laravel/homestead-demo (virtualbox, 0)</span><br></pre></td></tr></table></figure></p>
+<p>我们可以通过vagrant系列命令对box进行一些列的操作，这里不再赘述</p>
+<h2 id="克隆官方仓库"><a href="#克隆官方仓库" class="headerlink" title="克隆官方仓库"></a>克隆官方仓库</h2><p>box安装后就需要clone laravel官方的homestead git仓库了</p>
+<p>我先理一理 vagrant ，virtualbox ，homestead镜像，以及官方homestead git仓库的关系</p>
+<p>virtualbox是虚拟机，(-_-|| 废话)，他最终的任务就是运行homestead虚拟机，</p>
+<p>homestead镜像就是laravel官方为了方便开发者，将一系列的开发环境、软件打包成一个镜像供大家使用，有自己配过linux开发环境的同学就知道要弄好一个舒服的环境有多麻烦，而且版本切换，还原，代码传输都是麻烦事，vagrant的出现就是为了解决这么一个问题，vagrant可以看作是对virtualbox或vmware的一个高级封装，本质就是调用了一些virtualbox和vmware开放出来的api，vagrant官网介绍一开始就有说Vagrant stands on the shoulders of giants，所以他能站在高处通过完美的封装方便开发者，想更多了解请移步<a href="https://docs.vagrantup.com/v2" target="_blank" rel="noopener">vagrant docs</a>，homestead git仓库呢则是laravel官方对于homestead虚拟机的一些配置文件，里面有一些方便的linux脚本，这个待会儿介绍</p>
+<p>废话说完，我们先clone 版本库<br><code>git clone https://github.com/laravel/homestead.git Homestead</code></p>
+<h2 id="配置homestead"><a href="#配置homestead" class="headerlink" title="配置homestead"></a>配置homestead</h2><p>完成以上操作我们进到clone的目录里运行init.sh</p>
+<p>对于windows 双击也是可行的</p>
+<p>这会在windows家目录下生成 一个名为<strong> .</strong>homestead的文件夹</p>
+<p>里面就是homestead虚拟机的配置文件</p>
+<p>Homestead.yaml<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">box:</span> <span class="string">laravel/homestead</span></span><br><span class="line"><span class="attr">    ip:</span> <span class="string">"192.168.10.10"</span></span><br><span class="line"><span class="attr">    memory:</span> <span class="number">2048</span></span><br><span class="line"><span class="attr">    cpus:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">    provider:</span> <span class="string">virtualbox</span></span><br><span class="line"></span><br><span class="line"><span class="attr">    authorize:</span> <span class="string">./id_rsa.pub</span></span><br><span class="line"></span><br><span class="line"><span class="attr">    keys:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">./id_rsa</span></span><br><span class="line"></span><br><span class="line"><span class="attr">    folders:</span></span><br><span class="line"><span class="attr">        - map:</span> <span class="attr">F:/laravel_demo</span></span><br><span class="line"><span class="attr">          to:</span> <span class="string">/home/vagrant/Code</span></span><br><span class="line"></span><br><span class="line"><span class="attr">    sites:</span></span><br><span class="line"><span class="attr">        - map:</span> <span class="string">homestead.app</span></span><br><span class="line"><span class="attr">          to:</span> <span class="string">/home/vagrant/Code/public</span></span><br><span class="line"></span><br><span class="line"><span class="attr">    databases:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">homestead</span></span><br><span class="line"></span><br><span class="line"><span class="attr">    variables:</span></span><br><span class="line"><span class="attr">        - key:</span> <span class="string">'APP_ENV'</span></span><br><span class="line"><span class="attr">          value:</span> <span class="string">'local'</span></span><br><span class="line"><span class="attr">        - key:</span> <span class="string">'APP_DEBUG'</span></span><br><span class="line"><span class="attr">          value:</span> <span class="string">'true'</span></span><br></pre></td></tr></table></figure></p>
+<p>参数都是很简明易懂，有一点需要注意的是rsa 公钥私钥路径一定要对，不然无法启动</p>
+<p>没有的话通过git bash或其他linux环境输入以下命令生成<br><code>ssh-keygen -t rsa -C &quot;you@homestead&quot;</code></p>
+<h2 id="启动homestead"><a href="#启动homestead" class="headerlink" title="启动homestead"></a>启动homestead</h2><p>设置yaml配置文件后，我们就可以启动homestead了，进入到homestead目录(git clone的那个)，一个简单的命令<br><code>vagrant up</code><br>第一次启动会比较慢，耐心等待，如果你的硬盘是SSD那就很快了</p>
+<p>由于vagrant进行了端口转发(保护本地常用端口)，所以ssh端口不再是熟悉的22</p>
+<p>被转发到了2222，我们要想通过putty或者其他ssh工具连接的话地址应该填上<br><code>127.0.0.1:2222</code><br>然后方便调试我们还需要修改windows本地hosts文件</p>
+<p>进入hosts所在目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Windows\System32\drivers\etc</span><br><span class="line"><span class="comment">##如果在*nix下</span></span><br><span class="line">sudo vim /etc/hosts</span><br></pre></td></tr></table></figure></p>
+<p>添加新的一列<br><code>192.168.10.10  homestead.app</code><br>到现在配置基本完成</p>
+<p>我们ssh到homestead<br>cd到windows本地文件映射对应的路径，按照我上面的yaml配置文件应该为<br><code>/home/vagrant/Code</code><br>在目录下运行<br><code>laravel new helloworld</code></p>
+<p>由于不可抗拒的原因只能喝杯咖啡再来看</p>
+<p>等依赖安装完毕，我们浏览器键入homestead.app</p>
+<p>看到如下界面，就大功告成了，build something amazing !</p>
+<p>对，最新的laravel首页，😄</p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2015/12/laravel-new-homepage.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2015/12/laravel-new-homepage.png" alt="laravel-new-homepage"></a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/laravel/" rel="tag"># laravel</a>
+          
+            <a href="/tags/php/" rel="tag"># php</a>
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/homestead/" rel="tag"># homestead</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/20/how-to-config-namecheap-comodo-ssl-on-nginx/" rel="next" title="折腾之Nginx配置namecheap提供的comodoSSL">
+                <i class="fa fa-chevron-left"></i> 折腾之Nginx配置namecheap提供的comodoSSL
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/23/analyze-laravel-request-lifecycle-with-source-code-part-1/" rel="prev" title="结合源码分析laravel单个HTTP请求生命周期[part 1]">
+                结合源码分析laravel单个HTTP请求生命周期[part 1] <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">coderwen</p>
+              <p class="site-description motion-element" itemprop="description">闷声学技术，比西方记者快，比华莱士高</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载homestead镜像"><span class="nav-number">1.</span> <span class="nav-text">下载homestead镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离线安装homestead"><span class="nav-number">2.</span> <span class="nav-text">离线安装homestead</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新！！！！"><span class="nav-number">3.</span> <span class="nav-text">更新！！！！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#克隆官方仓库"><span class="nav-number">4.</span> <span class="nav-text">克隆官方仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置homestead"><span class="nav-number">5.</span> <span class="nav-text">配置homestead</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动homestead"><span class="nav-number">6.</span> <span class="nav-text">启动homestead</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">coderwen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
