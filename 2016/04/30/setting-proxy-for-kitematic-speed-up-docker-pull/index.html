@@ -83,7 +83,7 @@
 <meta name="keywords" content="docker,proxy,docker pull,dockerhub,kitematic">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为kitematic设置代理加速docker pull">
-<meta property="og:url" content="https://www.alwayscoder.com/2016/04/30/setting-proxy-for-kitematic-speed-up-docker-pull/index.html">
+<meta property="og:url" content="https://coder-wen.github.io/2016/04/30/setting-proxy-for-kitematic-speed-up-docker-pull/index.html">
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="kitematic是docker推出的GUI工具，使操作docker的方式变得更简单直观，但是直连docker hub的速度也是够呛，今天就来说说如何加速kitematic从docker hub拉取镜像 2016.08.02更新Docker官方已经推出了docker for mac，代理设置方便了很多，直接进到docker的preferences，找到advanced，填上代理服务器，记得是物理i">
 <meta property="og:locale" content="zh-Hans">
@@ -123,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="https://www.alwayscoder.com/2016/04/30/setting-proxy-for-kitematic-speed-up-docker-pull/"/>
+  <link rel="canonical" href="https://coder-wen.github.io/2016/04/30/setting-proxy-for-kitematic-speed-up-docker-pull/"/>
 
 
 
@@ -236,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2016/04/30/setting-proxy-for-kitematic-speed-up-docker-pull/">
+    <link itemprop="mainEntityOfPage" href="https://coder-wen.github.io/2016/04/30/setting-proxy-for-kitematic-speed-up-docker-pull/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="coderwen">
@@ -348,7 +348,7 @@
 
       
         <p>kitematic是docker推出的GUI工具，使操作docker的方式变得更简单直观，但是直连docker hub的速度也是够呛，今天就来说说如何加速kitematic从docker hub拉取镜像</p>
-<h2 id="2016-08-02更新"><a href="#2016-08-02更新" class="headerlink" title="2016.08.02更新"></a>2016.08.02更新</h2><p>Docker官方已经推出了docker for mac，代理设置方便了很多，直接进到docker的preferences，找到advanced，填上代理服务器，记得是物理ip，不要填127.0.0.1<br><a id="more"></a><br><a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/docer_for_mac_proxy.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/docer_for_mac_proxy.png" alt="docer_for_mac_proxy"></a></p>
+<h2 id="2016-08-02更新"><a href="#2016-08-02更新" class="headerlink" title="2016.08.02更新"></a>2016.08.02更新</h2><p>Docker官方已经推出了docker for mac，代理设置方便了很多，直接进到docker的preferences，找到advanced，填上代理服务器，记得是物理ip，不要填127.0.0.1<br><a id="more"></a><br><a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/docer_for_mac_proxy.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/docer_for_mac_proxy.png" alt="docer_for_mac_proxy"></a></p>
 <p>重启就可以愉快的下载镜像了</p>
 <hr>
 <p>原文</p>
@@ -356,13 +356,13 @@
 <h2 id="进入到docker-machine"><a href="#进入到docker-machine" class="headerlink" title="进入到docker machine"></a>进入到docker machine</h2><p>我们首先进入到docker machine</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//确保docker machine已经运行，如果你已经打开了kitematic，docker machine已经是运行状态</span><br><span class="line">//若未运行，可以通过kitematic或输入以下命令运行docker-machine</span><br><span class="line">//docker-machine start defaul</span><br><span class="line">//通过终端进入docker machine</span><br><span class="line">docker-machine ssh defaul</span><br><span class="line">//如果看见如下标志则已经进入docker-machine</span><br><span class="line">                       <span class="comment">##         .</span></span><br><span class="line">                  <span class="comment">## ## ##        ==</span></span><br><span class="line">               <span class="comment">## ## ## ## ##    ===</span></span><br><span class="line">           /<span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">"\___/ ===</span></span><br><span class="line"><span class="string">      ~~~ &#123;~~ ~~~~ ~~~ ~~~~ ~~~ ~ /  ===- ~~~</span></span><br><span class="line"><span class="string">           \______ o           __/</span></span><br><span class="line"><span class="string">             \    \         __/</span></span><br><span class="line"><span class="string">              \____\_______/</span></span><br><span class="line"><span class="string"> _                 _   ____     _            _</span></span><br><span class="line"><span class="string">| |__   ___   ___ | |_|___ \ __| | ___   ___| | _____ _ __</span></span><br><span class="line"><span class="string">| '_ \ / _ \ / _ \| __| __) / _` |/ _ \ / __| |/ / _ \ '__|</span></span><br><span class="line"><span class="string">| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   &amp;lt;  __/ |</span></span><br><span class="line"><span class="string">|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|</span></span><br><span class="line"><span class="string">Boot2Docker version 1.11.0, build HEAD : 32ee7e9 - Wed Apr 13 20:06:49 UTC 2016</span></span><br><span class="line"><span class="string">Docker version 1.11.0, build 4dc5990</span></span><br><span class="line"><span class="string">docker@default:~$</span></span><br></pre></td></tr></table></figure>
 <h2 id="修改boot2docker配置文"><a href="#修改boot2docker配置文" class="headerlink" title="修改boot2docker配置文"></a>修改boot2docker配置文</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//默认没有装vim 我们用vi修改配置文件</span><br><span class="line">sudo vi /var/lib/boot2docker/profile</span><br><span class="line">//我们在配置文件最后加入两行http及https代理设置</span><br><span class="line">//我使用的是privoxy的端口，如果你使用cow代理请将8118换成7777</span><br><span class="line">//注意 这里填写的代理ip是你物理机的ip地址</span><br><span class="line"><span class="built_in">export</span> HTTP_PROXY=http://192.168.1.102:8118</span><br><span class="line"><span class="built_in">export</span> HTTPS_PROXY=http://192.168.1.102:8118</span><br><span class="line">//保存退出</span><br><span class="line">:wq</span><br></pre></td></tr></table></figure>
-<p>如果你不知道如何配置privoxy请参考我的这篇博文<a href="https://www.alwayscoder.com/how-to-config-privoxy-for-go-get-http-proxy-on-mac-os/">Mac下如何配置privoxy完成go get代理</a></p>
+<p>如果你不知道如何配置privoxy请参考我的这篇博文<a href="https://www.alwayscoder.com/how-to-config-privoxy-for-go-get-http-proxy-on-mac-os/" target="_blank" rel="noopener">Mac下如何配置privoxy完成go get代理</a></p>
 <h2 id="重启docker-machin"><a href="#重启docker-machin" class="headerlink" title="重启docker-machin"></a>重启docker-machin</h2><p><pre><code>//重启docker-machine使其生效
 docker-machine restart default</code>&lt;/pre</pre></p>
 <h2 id="测试代"><a href="#测试代" class="headerlink" title="测试代"></a>测试代</h2><p><pre>`//重新进入到docker-machine<br>docker-machine ssh default<br>//我们测试pull一个minecraft服务器的镜像检测代理是否生效<br>//输入命令后速度已经飙升 enjoy it！<br>docker@default:~$ docker pull kitematic/minecraft<br>Using default tag: latest<br>latest: Pulling from kitematic/minecraft<br>8dddc0afbe0a: Downloading 3.035 MB/37.19 MB<br>a3ed95caeb02: Download complete<br>fd3e9ae37520: Downloading 4.195 MB/8.189 MB<br>cd0f216ce0cc: Downloading 6.406 MB/80.58 MB<br>3a95d2775135: Waiting<br>98282a63352e: Waiting</pre></p>
 <p>docker pull命令其实和在kitematic中点击create的效果是一样的</p>
 <p>回到kitematic我们重新测试一下，可以看到速度还是很可观的，当然这取决于你代理服务器的速度</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/kitematic_download.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/kitematic_download.png" alt="kitematic_download"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/kitematic_download.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/kitematic_download.png" alt="kitematic_download"></a></p>
 <p>如果没有生效，请检测你privoxy或其他的http代理工具是否配置正常</p>
 
       

@@ -83,7 +83,7 @@
 <meta name="keywords" content="raspberry,lcd,屏幕,树莓派">
 <meta property="og:type" content="article">
 <meta property="og:title" content="树莓派raspbian-jessie安装3.5英寸lcd屏幕">
-<meta property="og:url" content="https://www.alwayscoder.com/2016/03/13/install-3-5-inch-screen-on-raspbian-jessie/index.html">
+<meta property="og:url" content="https://coder-wen.github.io/2016/03/13/install-3-5-inch-screen-on-raspbian-jessie/index.html">
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="最近在某宝购入了一个树莓派的屏幕差不多就是这样子">
 <meta property="og:locale" content="zh-Hans">
@@ -124,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="https://www.alwayscoder.com/2016/03/13/install-3-5-inch-screen-on-raspbian-jessie/"/>
+  <link rel="canonical" href="https://coder-wen.github.io/2016/03/13/install-3-5-inch-screen-on-raspbian-jessie/"/>
 
 
 
@@ -237,7 +237,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2016/03/13/install-3-5-inch-screen-on-raspbian-jessie/">
+    <link itemprop="mainEntityOfPage" href="https://coder-wen.github.io/2016/03/13/install-3-5-inch-screen-on-raspbian-jessie/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="coderwen">
@@ -337,20 +337,20 @@
       
 
       
-        <p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/03/2016-03-13-132907_749x451_scrot.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/03/2016-03-13-132907_749x451_scrot.png" alt="3.5-inch-lcd-screen-for-raspberry-pi"></a></p>
+        <p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/03/2016-03-13-132907_749x451_scrot.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/03/2016-03-13-132907_749x451_scrot.png" alt="3.5-inch-lcd-screen-for-raspberry-pi"></a></p>
 <p>最近在某宝购入了一个树莓派的屏幕<br>差不多就是这样子<br><a id="more"></a></p>
 <p>通过GPIO连接到树莓派，一切看起来都那么完美，但是插入后却一直白屏，客服甩过来一个链接大致就是下一个驱动运行，reboot就行，然而并没有，客服也没有解决方法，我也懒得退货，因为我深信屏幕是没问题的是我的姿势有问题</p>
 <p>多谢google 花了一晚上的时间，总算解决了这个问题</p>
 <p>首先关于3.5 inch lcd的关键字将我带入<a href="http://www.waveshare.com/" target="_blank" rel="noopener">waveshare</a>这个网站，这个网站就是卖adruino和树莓派配件的，在一篇介绍他家3.5英寸屏幕的<a href="http://www.waveshare.com/wiki/3.5inch_RPi_LCD_(A" target="_blank" rel="noopener">wiki</a>)上，我似乎找到了解决方案，但是仔细一看，这不就是客服给我的解决方案吗，连驱动目录内的文件都是一样的，我有一个猜想，某宝的屏幕多半是仿造的，驱动也是兼容的</p>
 <p>但是为啥不管用呢，有没可能是系统的问题，我的系统是15年2月烧的，来到树莓派官网发现最新的raspbian已经是</p>
 <p>基于debian-jessie的raspbian-jessie了，抱着死马当活马医的心态，我重新烧制了最新的系统，然后运行了之前的驱动，然并卵，正当我绝望的时候，突然我在<a href="http://www.waveshare.com/wiki/3.5inch_RPi_LCD_(A" target="_blank" rel="noopener">wiki</a>)发现了一个不起眼的链接</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/03/thank-god-link.jpg"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/03/thank-god-link.jpg" alt="thank-god-link"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/03/thank-god-link.jpg" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/03/thank-god-link.jpg" alt="thank-god-link"></a></p>
 <h2 id="下载驱动"><a href="#下载驱动" class="headerlink" title="下载驱动"></a>下载驱动</h2><p><code>wget http://www.waveshare.com/w/upload/9/9d/LCD-show-151020.tar.gz</code></p>
 <h2 id="解压并运行驱动"><a href="#解压并运行驱动" class="headerlink" title="解压并运行驱动"></a>解压并运行驱动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar xvf LCD-show.tar.gz</span><br><span class="line"><span class="built_in">cd</span> LCD-show/</span><br><span class="line">sudo ./LCD35-show</span><br></pre></td></tr></table></figure>
 <h2 id="配置图形化启动"><a href="#配置图形化启动" class="headerlink" title="配置图形化启动"></a>配置图形化启动</h2><p>因为我不使用图形化界面，所以并没有配置boot选项，如果需要以图形界面进入请进行如下配置<br><code>sudo raspi-config</code></p>
 <p>依次选择</p>
 <p><code>Enable Boot to Desktop/Scratch -&gt; Desktop Log in as user &#39;pi&#39; at the graphical desktop</code><br>然后重启，你就能看到大大的树莓LOGO了</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/03/it-works.jpg"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/03/it-works.jpg" alt="it-works"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/03/it-works.jpg" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/03/it-works.jpg" alt="it-works"></a></p>
 
       
     </div>

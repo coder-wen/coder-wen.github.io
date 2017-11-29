@@ -83,7 +83,7 @@
 <meta name="keywords" content="go,golang,compile,upgrade">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决golang升级后编译变慢">
-<meta property="og:url" content="https://www.alwayscoder.com/2016/04/27/solving-compile-slower-after-go-lang-upgrade/index.html">
+<meta property="og:url" content="https://coder-wen.github.io/2016/04/27/solving-compile-slower-after-go-lang-upgrade/index.html">
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="最近把golang从1.6.0升级到1.6.2，发现编译速度奇慢，根本不能忍，使用go build -v发现每次都重复编译了该项目的所有依赖项，查询资料后得出结论是，由于版本的变化，go build每次运行都会检测版本的兼容性，发现不是当前版本编译的则重新编译,所以我们得删除之前版本编译后的第三方包">
 <meta property="og:locale" content="zh-Hans">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="https://www.alwayscoder.com/2016/04/27/solving-compile-slower-after-go-lang-upgrade/"/>
+  <link rel="canonical" href="https://coder-wen.github.io/2016/04/27/solving-compile-slower-after-go-lang-upgrade/"/>
 
 
 
@@ -235,7 +235,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2016/04/27/solving-compile-slower-after-go-lang-upgrade/">
+    <link itemprop="mainEntityOfPage" href="https://coder-wen.github.io/2016/04/27/solving-compile-slower-after-go-lang-upgrade/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="coderwen">
@@ -338,7 +338,7 @@
         <p>最近把golang从1.6.0升级到1.6.2，发现编译速度奇慢，根本不能忍，使用go build -v发现每次都重复编译了该项目的所有依赖项，查询资料后得出结论是，由于版本的变化，go build每次运行都会检测版本的兼容性，发现不是当前版本编译的则重新编译,所以我们得删除之前版本编译后的第三方包<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">根据官方定义$GOPATH/pkg则是存放第三方包编译后的.a文件</span><br><span class="line">//src contains Go source files,</span><br><span class="line">//pkg contains package objects, and</span><br><span class="line">//bin contains executable commands.</span><br></pre></td></tr></table></figure></p>
 <p>出于好奇的心理，我在$GOPATH/pkg 下随便选择了一个编译后的.a 文件</p>
 <p>对，你没猜错，我们直接通过more把.a文件输出到终端就能看到版本号</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/golang-pkg-version.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/golang-pkg-version.png" alt="golang-pkg-version"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/golang-pkg-version.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/golang-pkg-version.png" alt="golang-pkg-version"></a></p>
 <p>可以得知golang通过这个标示符来得知它是由哪个版本的golang编译的，所以解决方法也异常简单，我们直接删除$GOPATH/pkg下的所有文件，再重新编译一次即可，以后只要你使用的第三方库和golang不变我们都可以使用编译后的文件，希望能帮助到大家</p>
 
       

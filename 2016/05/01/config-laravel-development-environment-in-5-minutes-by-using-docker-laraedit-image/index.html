@@ -83,7 +83,7 @@
 <meta name="keywords" content="laravel,docker,laraedit,mac,osx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用docker镜像laraedit在5分钟内配置laravel开发环境">
-<meta property="og:url" content="https://www.alwayscoder.com/2016/05/01/config-laravel-development-environment-in-5-minutes-by-using-docker-laraedit-image/index.html">
+<meta property="og:url" content="https://coder-wen.github.io/2016/05/01/config-laravel-development-environment-in-5-minutes-by-using-docker-laraedit-image/index.html">
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="为什么使用docker配置laravel开发环境 容器启动速度快，真的很快，容器启动时间大约为3-5秒 配置简单，易修改 相比vagrant更轻量级，可以同时部署多个容器">
 <meta property="og:locale" content="zh-Hans">
@@ -124,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="https://www.alwayscoder.com/2016/05/01/config-laravel-development-environment-in-5-minutes-by-using-docker-laraedit-image/"/>
+  <link rel="canonical" href="https://coder-wen.github.io/2016/05/01/config-laravel-development-environment-in-5-minutes-by-using-docker-laraedit-image/"/>
 
 
 
@@ -237,7 +237,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2016/05/01/config-laravel-development-environment-in-5-minutes-by-using-docker-laraedit-image/">
+    <link itemprop="mainEntityOfPage" href="https://coder-wen.github.io/2016/05/01/config-laravel-development-environment-in-5-minutes-by-using-docker-laraedit-image/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="coderwen">
@@ -367,8 +367,8 @@
 <a id="more"></a>
 <h2 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h2><p>略</p>
 <h2 id="pull-laraedit镜像"><a href="#pull-laraedit镜像" class="headerlink" title="pull laraedit镜像"></a>pull laraedit镜像</h2><ul>
-<li>首先配置好docker的代理，详情请参见我的这篇博文<a href="https://www.alwayscoder.com/setting-proxy-for-kitematic-speed-up-docker-pull/">为kitematic设置代理加速docker pull</a></li>
-<li>开启docker-machine后在可以通过在kitematic中搜索laraedit并添加镜像<a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/laraedit_kitematic.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/laraedit_kitematic.png" alt="laraedit_kitematic"></a></li>
+<li>首先配置好docker的代理，详情请参见我的这篇博文<a href="https://www.alwayscoder.com/setting-proxy-for-kitematic-speed-up-docker-pull/" target="_blank" rel="noopener">为kitematic设置代理加速docker pull</a></li>
+<li>开启docker-machine后在可以通过在kitematic中搜索laraedit并添加镜像<a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/laraedit_kitematic.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/laraedit_kitematic.png" alt="laraedit_kitematic"></a></li>
 <li><p>你也可以通过终端键入如下命令</p>
 <p>docker pull laraedit/laraedit`<br><pre class="lang:default highlight:0 decode:true"></pre><br>当然能否在5分钟内下载完都取决于你的代理服务器了，当然大家可以选择国内<a href="http://www.daocloud.io" target="_blank" rel="noopener">daoclound</a>，<a href="http://www.alauda.cn" target="_blank" rel="noopener">灵雀云</a>一类云服务商的镜像服务来加速，我的梯子很好用，就不去尝试了</p>
 </li>
@@ -377,11 +377,11 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//下面的命令将laraedit的80端口映射到docker-machine的80端口 </span><br><span class="line">//并将你定义的app目录映射到www目录下，请注意laravel项目的public目录必须得在app根目录下，不能处于二级目录</span><br><span class="line">docker run -p 80:80 -v /path/to/your/app:/var/www/html/app laraedit/laraedit`</span><br></pre></td></tr></table></figure>
 <p>至于端口和目录大家可以根据自己的情况填写</p>
 <h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>我们通过kitematic点击EXEC开启一个laraedit的shell</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/kitematic-exec.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/kitematic-exec.png" alt="kitematic-exec"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/kitematic-exec.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/kitematic-exec.png" alt="kitematic-exec"></a></p>
 <p>进入到shell中我们先切换到bash</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/www/html/app/</span><br><span class="line">//注意new 后面不要跟参数，这会在app目录下创建laravel项目</span><br><span class="line">laravel new</span><br></pre></td></tr></table></figure>
 <p>等laravel命令跑完后，Kitematic的web preview已经可以看见laravel的标志了</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/laravel-5-web-preview.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/laravel-5-web-preview.png" alt="laravel-5-web-preview"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/laravel-5-web-preview.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/laravel-5-web-preview.png" alt="laravel-5-web-preview"></a></p>
 <p>点击laravel 5区域则会通过浏览器打开此地址</p>
 <h2 id="退出并保存容器"><a href="#退出并保存容器" class="headerlink" title="退出并保存容器"></a>退出并保存容器</h2><p>我们当然不想每次都来设置一番，我们需要保存当前运行的容器实例，如果大家没有重命名的话，当前laraedit运行的容器默认命名是类似amazing_colden的一个随机字符串</p>
 <p>接下来我们将我们修改过的laraedit保存成一个新的镜像</p>

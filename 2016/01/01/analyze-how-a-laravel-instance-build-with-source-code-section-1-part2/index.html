@@ -83,7 +83,7 @@
 <meta name="keywords" content="laravel,php,sourcecode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="结合源码分析laravel实例$app是怎么一步步构建的(上)[part 2]">
-<meta property="og:url" content="https://www.alwayscoder.com/2016/01/01/analyze-how-a-laravel-instance-build-with-source-code-section-1-part2/index.html">
+<meta property="og:url" content="https://coder-wen.github.io/2016/01/01/analyze-how-a-laravel-instance-build-with-source-code-section-1-part2/index.html">
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="在结合源码分析Laravel单个HTTP请求生命周期[part 1]中我们大致分析了laravel处理一次http请求的流程，让laravel初学者能对laravel的生命周期有个初步的认识，但是由于篇幅和时间的问题，其中一些具体的实现我一笔带过，在part2中，我今天来分析一下一个laravel实例，也就是入口文件中的$app是怎么一步步构建的。 温馨提示，本文篇幅较长。">
 <meta property="og:locale" content="zh-Hans">
@@ -123,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="https://www.alwayscoder.com/2016/01/01/analyze-how-a-laravel-instance-build-with-source-code-section-1-part2/"/>
+  <link rel="canonical" href="https://coder-wen.github.io/2016/01/01/analyze-how-a-laravel-instance-build-with-source-code-section-1-part2/"/>
 
 
 
@@ -236,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2016/01/01/analyze-how-a-laravel-instance-build-with-source-code-section-1-part2/">
+    <link itemprop="mainEntityOfPage" href="https://coder-wen.github.io/2016/01/01/analyze-how-a-laravel-instance-build-with-source-code-section-1-part2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="coderwen">
@@ -336,8 +336,8 @@
       
 
       
-        <p>在<a href="https://www.alwayscoder.com/analyze-laravel-request-lifecycle-with-source-code-part-1/">结合源码分析Laravel单个HTTP请求生命周期[part 1]</a>中我们大致分析了laravel处理一次http请求的流程，让laravel初学者能对laravel的生命周期有个初步的认识，但是由于篇幅和时间的问题，其中一些具体的实现我一笔带过，在part2中，我今天来分析一下一个laravel实例，也就是入口文件中的$app是怎么一步步构建的。</p>
-<p><strong>温馨提示，本文篇幅较长。</strong><br><a id="more"></a><br>在<a href="https://www.alwayscoder.com/analyze-laravel-request-lifecycle-with-source-code-part-1/">part1</a>中我们知道$app实例化以及绑定3大重要组件都是在bootstrap/app.php中进行的，我们先从它的实例化下手</p>
+        <p>在<a href="https://www.alwayscoder.com/analyze-laravel-request-lifecycle-with-source-code-part-1/" target="_blank" rel="noopener">结合源码分析Laravel单个HTTP请求生命周期[part 1]</a>中我们大致分析了laravel处理一次http请求的流程，让laravel初学者能对laravel的生命周期有个初步的认识，但是由于篇幅和时间的问题，其中一些具体的实现我一笔带过，在part2中，我今天来分析一下一个laravel实例，也就是入口文件中的$app是怎么一步步构建的。</p>
+<p><strong>温馨提示，本文篇幅较长。</strong><br><a id="more"></a><br>在<a href="https://www.alwayscoder.com/analyze-laravel-request-lifecycle-with-source-code-part-1/" target="_blank" rel="noopener">part1</a>中我们知道$app实例化以及绑定3大重要组件都是在bootstrap/app.php中进行的，我们先从它的实例化下手</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$app = <span class="keyword">new</span> Illuminate\Foundation\Application(</span><br><span class="line">    realpath(<span class="keyword">__DIR__</span>.<span class="string">'/../'</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>在看构造函数前，我们先看看Application是个什么来头</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">extends</span> <span class="title">Container</span> <span class="keyword">implements</span> <span class="title">ApplicationContract</span>, <span class="title">HttpKernelInterface</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">       *.........</span></span><br><span class="line"><span class="comment">       *.........</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -364,7 +364,7 @@
 <hr>
 <p>我觉得service provider干的事 就是注册服务需要的组件，当这些组件需要时容器能很容易地把他们解析出来</p>
 <p>我们看看helloworld中有多少service provider的子类，长长的列表足以证明service provider在laravel框架中的重要性</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2015/12/ServiceProviders.jpg"><img src="https://www.alwayscoder.com/wp-content/uploads/2015/12/ServiceProviders.jpg" alt="service provider的子类"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2015/12/ServiceProviders.jpg" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2015/12/ServiceProviders.jpg" alt="service provider的子类"></a></p>
 <p><a href="https://laravel.com/docs/5.2/providers" target="_blank" rel="noopener">官方文档</a>对service provider有详细的介绍，我也不再赘述</p>
 <p>现在我们看看两次传进去的service provider构造函数分别干了什么，其实两者都没重写构造函数，所以构造函数都是基类ServiceProvider的</p>
 <p>构造函数就一句话：注入了当前laravel的实例<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create a new service provider instance.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>  \Illuminate\Contracts\Foundation\Application  $app</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($app)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;app = $app;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -382,7 +382,7 @@
 <p>第一行乍看有点蒙，至少我开始看时蒙了，虽然写程序的时候我知道可以通过app(‘url’)拿到url的实例</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; app(<span class="string">'url'</span>)</span><br><span class="line">=&gt; Illuminate\Routing\UrlGenerator &#123;<span class="comment">#103&#125;</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
 <p>想必$this-&gt;[‘events’]是一样的，但是实现原理还是不太清楚，打个断点一目了然</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2015/12/offsetGet.jpg"><img src="https://www.alwayscoder.com/wp-content/uploads/2015/12/offsetGet.jpg" alt="offsetGet"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2015/12/offsetGet.jpg" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2015/12/offsetGet.jpg" alt="offsetGet"></a></p>
 <p>Container容器通过实现了php原生ArrayAccess接口的offsetGet函数,提供了对容器的下标访问方法</p>
 <p>所以$this[‘events’]等于$this-&gt;make(‘events’)，没记错的话events就是EventServiceProvider实例作为参数时调用register函数绑定的</p>
 <p>我还是上一下代码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Register the service provider.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">register</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;app-&gt;singleton(<span class="string">'events'</span>, <span class="function"><span class="keyword">function</span> <span class="params">($app)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">new</span> Dispatcher($app))-&gt;setQueueResolver(<span class="function"><span class="keyword">function</span> <span class="params">()</span> <span class="title">use</span> <span class="params">($app)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> $app-&gt;make(<span class="string">'Illuminate\Contracts\Queue\Factory'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>

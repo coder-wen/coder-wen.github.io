@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="laravel,php,http,lifecycle,sourcecode,生命周期," />
+  <meta name="keywords" content="laravel,php,sourcecode,http,lifecycle,生命周期," />
 
 
 
@@ -80,10 +80,10 @@
 
 
 <meta name="description" content="孙子曰：  知己知彼，百战不殆在我看来学习一个框架最好的方法就是阅读源码，不了解框架本身的实现，调用框架提供的api只能停留在黑箱操作，所以我决定花一番功夫来研究下laravel核心部分的实现，今天先来分析下laravel框架的http request的生命周期">
-<meta name="keywords" content="laravel,php,http,lifecycle,sourcecode,生命周期">
+<meta name="keywords" content="laravel,php,sourcecode,http,lifecycle,生命周期">
 <meta property="og:type" content="article">
 <meta property="og:title" content="结合源码分析laravel单个HTTP请求生命周期[part 1]">
-<meta property="og:url" content="https://www.alwayscoder.com/2015/12/23/analyze-laravel-request-lifecycle-with-source-code-part-1/index.html">
+<meta property="og:url" content="https://coder-wen.github.io/2015/12/23/analyze-laravel-request-lifecycle-with-source-code-part-1/index.html">
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="孙子曰：  知己知彼，百战不殆在我看来学习一个框架最好的方法就是阅读源码，不了解框架本身的实现，调用框架提供的api只能停留在黑箱操作，所以我决定花一番功夫来研究下laravel核心部分的实现，今天先来分析下laravel框架的http request的生命周期">
 <meta property="og:locale" content="zh-Hans">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="https://www.alwayscoder.com/2015/12/23/analyze-laravel-request-lifecycle-with-source-code-part-1/"/>
+  <link rel="canonical" href="https://coder-wen.github.io/2015/12/23/analyze-laravel-request-lifecycle-with-source-code-part-1/"/>
 
 
 
@@ -235,7 +235,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2015/12/23/analyze-laravel-request-lifecycle-with-source-code-part-1/">
+    <link itemprop="mainEntityOfPage" href="https://coder-wen.github.io/2015/12/23/analyze-laravel-request-lifecycle-with-source-code-part-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="coderwen">
@@ -368,7 +368,7 @@
 <p>$response通过send方法将返回传送给浏览器，一个HTTP请求至此结束。</p>
 <p>最后kernel调用terminate方法，主要是为了调用中间件的terminate方法做一些扫尾工作。</p>
 <p>由于笔者水平有限，我决定画张流程图</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2015/12/laravel-http-request-lifecycle.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2015/12/laravel-http-request-lifecycle.png" alt="laravel http request lifecycle"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2015/12/laravel-http-request-lifecycle.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2015/12/laravel-http-request-lifecycle.png" alt="laravel http request lifecycle"></a></p>
 <p>画图不易，转载请注明出处</p>
 
       
@@ -391,11 +391,11 @@
           
             <a href="/tags/php/" rel="tag"># php</a>
           
+            <a href="/tags/sourcecode/" rel="tag"># sourcecode</a>
+          
             <a href="/tags/http/" rel="tag"># http</a>
           
             <a href="/tags/lifecycle/" rel="tag"># lifecycle</a>
-          
-            <a href="/tags/sourcecode/" rel="tag"># sourcecode</a>
           
             <a href="/tags/生命周期/" rel="tag"># 生命周期</a>
           

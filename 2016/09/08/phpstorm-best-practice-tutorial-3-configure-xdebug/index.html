@@ -83,7 +83,7 @@
 <meta name="keywords" content="laravel,phpstorm,debug,IDE,xdebug">
 <meta property="og:type" content="article">
 <meta property="og:title" content="玩转phpstorm教程系列(3)配置基于xdebug的debug">
-<meta property="og:url" content="https://www.alwayscoder.com/2016/09/08/phpstorm-best-practice-tutorial-3-configure-xdebug/index.html">
+<meta property="og:url" content="https://coder-wen.github.io/2016/09/08/phpstorm-best-practice-tutorial-3-configure-xdebug/index.html">
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="玩转phpstorm前面的两讲已经介绍了在phpstorm上创建项目以及一些常用的自定义设置的基本流程。 今天我来讲讲最重要也算是最麻烦的配置：基于xdebug的debug配置。">
 <meta property="og:locale" content="zh-Hans">
@@ -131,7 +131,7 @@
 
 
 
-  <link rel="canonical" href="https://www.alwayscoder.com/2016/09/08/phpstorm-best-practice-tutorial-3-configure-xdebug/"/>
+  <link rel="canonical" href="https://coder-wen.github.io/2016/09/08/phpstorm-best-practice-tutorial-3-configure-xdebug/"/>
 
 
 
@@ -244,7 +244,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2016/09/08/phpstorm-best-practice-tutorial-3-configure-xdebug/">
+    <link itemprop="mainEntityOfPage" href="https://coder-wen.github.io/2016/09/08/phpstorm-best-practice-tutorial-3-configure-xdebug/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="coderwen">
@@ -366,7 +366,7 @@
       
 
       
-        <p>玩转phpstorm前面的两讲已经介绍了在phpstorm上<a href="https://www.alwayscoder.com/phpstorm-best-practice-tutorial-1-how-to-new-a-project/">创建项目</a>以及一些常用的<a href="https://www.alwayscoder.com/phpstorm-best-practice-tutorial-2-custom-setting/">自定义设置</a>的基本流程。</p>
+        <p>玩转phpstorm前面的两讲已经介绍了在phpstorm上<a href="https://www.alwayscoder.com/phpstorm-best-practice-tutorial-1-how-to-new-a-project/" target="_blank" rel="noopener">创建项目</a>以及一些常用的<a href="https://www.alwayscoder.com/phpstorm-best-practice-tutorial-2-custom-setting/" target="_blank" rel="noopener">自定义设置</a>的基本流程。</p>
 <p>今天我来讲讲最重要也算是最麻烦的配置：基于xdebug的debug配置。<br><a id="more"></a></p>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>首先常见的debug场景主要分两类：</p>
 <ol>
@@ -387,33 +387,33 @@
 <p>添加如下配置项</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">zend_extension=xdebug.so</span><br><span class="line">xdebug.remote_enable=1</span><br><span class="line"><span class="comment">#你的开发机ip地址，最好通过路由器绑定ip避免变化又需修改配置文件</span></span><br><span class="line">xdebug.remote_host=192.168.1.101</span><br><span class="line">xdebug.remote_port=9000</span><br></pre></td></tr></table></figure>
 <h2 id="IDE设置"><a href="#IDE设置" class="headerlink" title="IDE设置"></a>IDE设置</h2><p>切回到IDE依次Run-&gt;Web Server Debug Validation 对话框如下</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-debug-validation.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-debug-validation.png" alt="phpstorm-debug-validation"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-debug-validation.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-debug-validation.png" alt="phpstorm-debug-validation"></a></p>
 <p>可以看到验证时有两种服务器选择，其实两者都能验证，但是对于laravel这种对于url重写的web程序来说我们最好选择前者，不然验证脚本的访问会有一些问题。</p>
 <p>选择local的话，如果你使用的是laravel框架一定要记住路径一定是project根目录加上public目录，不然浏览器无法访问到非public目录文件(其它框架同理)，然后是填写到验证脚本的url，大家可以看到我填写了一个xdebugdemo.app 这是我通过yaml文件配置到Homestead里面去的一个本地域名，一个虚拟机里面多个项目同时部署时只能通过端口或者域名的方式把请求分发到不同的项目，因为我homestead里面部署了不少项目所以我填写了这个项目的url，对你们而言不管是什么项目什么框架只要你填写的url能访问到PHPStorm部署上去的脚本那就可以点击验证。</p>
 <p>点击validate，我们可以看到对话框拿到了很多信息，xdebug版本号以及刚才我们在服务器编辑的xdebug配置文件里面的内容，而且没有报错，如果你看到了这些证明你的配置离成功已经不远了。</p>
 <p>为了给大家演示，我这个debugdemo也是直接laravel new出来的一个新项目，我们从头演示如何设置断点开启debug模式。</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/debug-demo-run-config.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/debug-demo-run-config.png" alt="debug-demo-run-config"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/debug-demo-run-config.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/debug-demo-run-config.png" alt="debug-demo-run-config"></a></p>
 <p>大家可以看到我的项目还没有配置任何的运行选项，注意我红圈圈出来的地方，我们点击三角形下的编辑选项通过+号选择一个php http request</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/add-phpstorm-http-request.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/add-phpstorm-http-request.png" alt="add-phpstorm-http-request"></a></p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/http-request-server-xdebug.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/http-request-server-xdebug.png" alt="http-request-server-xdebug"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/add-phpstorm-http-request.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/add-phpstorm-http-request.png" alt="add-phpstorm-http-request"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/http-request-server-xdebug.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/http-request-server-xdebug.png" alt="http-request-server-xdebug"></a></p>
 <p>我们可以看到就是定义了一个HTTP请求的一些基本属性，对我演示而言我只需要配置一个服务器，其它的东西我们暂时不用管，这样就完成了一个对服务器web根目录GET请求的配置</p>
 <p>服务器的配置一定要注意一个目录映射的问题，也就是本地文件的路径对应服务器上文件的路径应该有一个映射关系，不然debug程序无法跟到对应的代码里去。</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/http-request-server-xdebug-1.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/http-request-server-xdebug-1.png" alt="http-request-server-xdebug"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/http-request-server-xdebug-1.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/http-request-server-xdebug-1.png" alt="http-request-server-xdebug"></a></p>
 <p>保存修改后，回到PHPStorm主界面我们可以看到又上角多了一个绿色的三角形按钮以及debug按钮</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-run-debug-button.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-run-debug-button.png" alt="phpstorm-run-debug-button"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-run-debug-button.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-run-debug-button.png" alt="phpstorm-run-debug-button"></a></p>
 <p>如果点击运行的话，PHPStorm就会根据我们的HTTP请求配置进行一次HTTP请求并把服务器返回的结果打印在控制台上，我们现在主要演示debug，先打断点，点击行号右侧区域红点就会停留在代码左侧，然后点击debug按钮，可以看到我们的运行已经停在了36行说明断点运行正常。</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-break-point-36-line.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-break-point-36-line.png" alt="phpstorm-break-point-36-line"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-break-point-36-line.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-break-point-36-line.png" alt="phpstorm-break-point-36-line"></a></p>
 <p>最下面的是debug工具栏，因为我这节只是讲解如何配置xdebug，详细的使用教程我会在后面的玩转PHPStorm系列给出来。</p>
 <p>可以看到我们是通过配置一个HTTP Request来激活这次debug的对于网页开发而言大多数时候我们的客户端逻辑都是通过浏览器完成的而不是手动去拼写报文。那么我们需要从浏览器把请求转为Debug模式。</p>
 <p>基于Chrome我们需要去chrome 商店下载一个<a href="https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc" target="_blank" rel="noopener">Xdebug helper</a> 插件，添加好此插件后，在插件栏我们可以看到多出了一个臭虫图标，默认是灰色的，我们首先右键点击options</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/xdebug-helper-options.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/xdebug-helper-options.png" alt="xdebug-helper-options"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/xdebug-helper-options.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/xdebug-helper-options.png" alt="xdebug-helper-options"></a></p>
 <p>在我红框框出来的地方我们需要把IDE Key设置为phpstorm。保存</p>
 <p>切回到phpstorm，在刚才的debug按钮附近有一个类似电话的图标</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-xdebug-listener.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-xdebug-listener.png" alt="phpstorm-xdebug-listener"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-xdebug-listener.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/phpstorm-xdebug-listener.png" alt="phpstorm-xdebug-listener"></a></p>
 <p>就是最右边这个，如果你的是有一个红色🚫 你需要再点击一次使其和我图片中的一模一样</p>
 <p>再切换到我们需要debug的页面，点击xdebug插件的debug按钮使其变为绿色，刷新页面。</p>
 <p>如果配置无误的话，当前页面就会处于无限转圈中并且自动切换到phpstorm</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/xdebug-run-enable.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/xdebug-run-enable.png" alt="xdebug-run-enable"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/xdebug-run-enable.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/xdebug-run-enable.png" alt="xdebug-run-enable"></a></p>
 <p>如果跳回到phpstorm说明配置成功。</p>
 <h2 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h2><ul>
 <li>断点没有停下  首先确保你的web server debug validation通过了验证，这个很关键。</li>

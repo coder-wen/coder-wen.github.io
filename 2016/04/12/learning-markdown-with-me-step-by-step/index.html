@@ -83,7 +83,7 @@
 <meta name="keywords" content="learn,learn markdown,markdown,markdown syntax,markdown 语法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="跟我一起学习markdown语法">
-<meta property="og:url" content="https://www.alwayscoder.com/2016/04/12/learning-markdown-with-me-step-by-step/index.html">
+<meta property="og:url" content="https://coder-wen.github.io/2016/04/12/learning-markdown-with-me-step-by-step/index.html">
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="markdown是什么 根据wiki百科，Markdown 是一种轻量级标记语言，创始人为约翰·格鲁伯（John Gruber）。它允许人们“使用易读易写的纯文本格式编写文档，然后转换成有效的XHTML(或者HTML)文档”。这种语言吸收了很多在电子邮件中已有的纯文本标记的特性2016年，markdown可以说无处不见，github的README都是.md结尾的，不少开源书籍也开始使用markdo">
 <meta property="og:locale" content="zh-Hans">
@@ -123,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="https://www.alwayscoder.com/2016/04/12/learning-markdown-with-me-step-by-step/"/>
+  <link rel="canonical" href="https://coder-wen.github.io/2016/04/12/learning-markdown-with-me-step-by-step/"/>
 
 
 
@@ -236,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2016/04/12/learning-markdown-with-me-step-by-step/">
+    <link itemprop="mainEntityOfPage" href="https://coder-wen.github.io/2016/04/12/learning-markdown-with-me-step-by-step/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="coderwen">
@@ -354,7 +354,7 @@
 <p>在新打开的atom编辑窗口我们就可以开始markdown的练习了<br>我们输入</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="strong">**hello-markdown**</span></span><br></pre></td></tr></table></figure>
 <p>接着按下ctrl+shift+m，看看右边是不是出现了一个learn-md.md preview窗口</p>
-<p>一个加粗的hello-markdown已经出现了，是不是很简单<br>[<img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/hello-markdown.png" alt="hello-markdown">(<a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/hello-markdown.png">https://www.alwayscoder.com/wp-content/uploads/2016/04/hello-markdown.png</a>)</p>
+<p>一个加粗的hello-markdown已经出现了，是不是很简单<br>[<img src="https://www.alwayscoder.com/wp-content/uploads/2016/04/hello-markdown.png" alt="hello-markdown">(<a href="https://www.alwayscoder.com/wp-content/uploads/2016/04/hello-markdown.png" target="_blank" rel="noopener">https://www.alwayscoder.com/wp-content/uploads/2016/04/hello-markdown.png</a>)</p>
 <p>相信你已经清楚如何用atom编辑以及预览markdown了，接下来我们开始markdown语法的学习</p>
 <h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><p>只需要在目标字符前后加入英文下划线_<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="emphasis">_我斜了_</span></span><br></pre></td></tr></table></figure></p>
 <p>恩，是斜了的，只是斜了不是弯了😂<br>如果你就是想输出英文下滑线怎么办呢，很简单使用\转义</p>
@@ -388,7 +388,7 @@
 </li>
 </ul>
 <h2 id="网址链接"><a href="#网址链接" class="headerlink" title="网址链接"></a>网址链接</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Welcome to my [<span class="string">blog</span>](<span class="link">https://www.alwayscoder.com</span>)</span><br></pre></td></tr></table></figure>
-<p>在因为方括号里写入链接文本，在英文圆括号中填入你的网址<br>渲染出来大概就是这样的 Welcome to my <a href="https://www.alwayscoder.com">blog</a><br>其实这就和html中的href时一样的，你使用相对地址一样可以渲染<br><code>我正在看[跟我一起学习markdown语法](/learning-markdown-with-me-step-by-step)</code><br>上面这种是最常见的内联链接，另一种是引用链接</p>
+<p>在因为方括号里写入链接文本，在英文圆括号中填入你的网址<br>渲染出来大概就是这样的 Welcome to my <a href="https://www.alwayscoder.com" target="_blank" rel="noopener">blog</a><br>其实这就和html中的href时一样的，你使用相对地址一样可以渲染<br><code>我正在看[跟我一起学习markdown语法](/learning-markdown-with-me-step-by-step)</code><br>上面这种是最常见的内联链接，另一种是引用链接</p>
 <p><pre>`Let’s go <a href="www.google.com`&lt;/pre">google</a></pre></p>
 <p>看一眼都能懂<br>接下来我们看看怎么在markdown中插入图片<br><code>![github cat](https://octodex.github.com/images/mountietocat.png)</code><br>将上面的代码粘贴到atom稍等片刻，预览就会出现一只可爱github小猫<br>当然引用图片链接就和引用网址一样的，不用我说你都能猜出来了吧<br><code>![github cat][cute cat][cute cat]: https://octodex.github.com/images/mountietocat.png</code></p>
 <h2 id="块引用"><a href="#块引用" class="headerlink" title="块引用"></a>块引用</h2><p>块引用这种提高逼格的东西怎么能没有呢，要使用块引用只需在块引用文本前加上一个&gt;符号<br><code>&gt;&quot;Stay Hungry,Stay Foolish&quot;</code><br>块引用同时支持嵌套使用</p>

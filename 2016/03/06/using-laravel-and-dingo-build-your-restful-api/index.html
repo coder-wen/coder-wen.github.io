@@ -83,7 +83,7 @@
 <meta name="keywords" content="laravel,php,auth,dingo,jwt,RESTful">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用laravel+dingo打造你的RESTful接口">
-<meta property="og:url" content="https://www.alwayscoder.com/2016/03/06/using-laravel-and-dingo-build-your-restful-api/index.html">
+<meta property="og:url" content="https://coder-wen.github.io/2016/03/06/using-laravel-and-dingo-build-your-restful-api/index.html">
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="dingo api是由澳洲开发者Jason Lewis为laravel及lumen框架更好地实现RESTful接口而量身打造的第三方库，最近也尝试用laravel+dingo写了一个线上项目，博主不才，只能写篇博文抛砖引玉。">
 <meta property="og:locale" content="zh-Hans">
@@ -126,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="https://www.alwayscoder.com/2016/03/06/using-laravel-and-dingo-build-your-restful-api/"/>
+  <link rel="canonical" href="https://coder-wen.github.io/2016/03/06/using-laravel-and-dingo-build-your-restful-api/"/>
 
 
 
@@ -239,7 +239,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.alwayscoder.com/2016/03/06/using-laravel-and-dingo-build-your-restful-api/">
+    <link itemprop="mainEntityOfPage" href="https://coder-wen.github.io/2016/03/06/using-laravel-and-dingo-build-your-restful-api/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="coderwen">
@@ -446,7 +446,7 @@
 <p>其中 $api-&gt;version方法定义了接口的版本号，env文件里面我们默认设置是v1</p>
 <p>我们在homestead里面run起来，这个接口已经是可以访问的了</p>
 <p>我们用<a href="https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop" target="_blank" rel="noopener">postman</a>测试一下已经是可以访问的了，至于为什么一个简单的接口耗费了400ms，一方面是虚拟机共享目录，另一方面我为了测试开启了xdebug所以性能损耗很大</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/02/hello-api-test.jpg"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/02/hello-api-test.jpg" alt="restful laravel hello api"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/02/hello-api-test.jpg" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/02/hello-api-test.jpg" alt="restful laravel hello api"></a></p>
 <p>可能你会说这和<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Route::get(<span class="string">'/hello'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'hello'</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
 <p>有什么区别，确实在这里还看不出dingo的优势，我们带着好奇心继续探索</p>
 <p>根据dingo上wiki文档我们发现dingo完全是兼容Route常见写法的</p>
@@ -463,10 +463,10 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>\<span class="title">Api</span>\<span class="title">V1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">User</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Requests</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Dingo</span>\<span class="title">Api</span>\<span class="title">Routing</span>\<span class="title">Helpers</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>\<span class="title">Controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">use</span> <span class="title">Helpers</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">register</span><span class="params">($user_name, Request $request)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (User::where(<span class="string">'name'</span>, $user_name)-&gt;count() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;response-&gt;errorBadRequest(<span class="string">'该用户已经存在'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!preg_match(<span class="string">'/^[a-z0-9]&#123;6,15&#125;$/'</span>, $user_name)) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;response-&gt;errorBadRequest(<span class="string">'用户名由6-15位小写字母和数字组成'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        $password = $request-&gt;json(<span class="string">'password'</span>);</span><br><span class="line">        $user = <span class="keyword">new</span> User();</span><br><span class="line">        $user-&gt;name = $user_name;</span><br><span class="line">        $user-&gt;password = bcrypt($password);</span><br><span class="line">        $user-&gt;save();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;response-&gt;created(<span class="string">"/users/"</span> . $user_name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>因为是演示程序，我只做了很简单的数据校验，如果用户存在的或不符合用户名规范都使用dingo的helper链式调用errorBadRequest返回400相应码告诉客户端这是个错误的请求</p>
 <p>我们注册一个用户试试</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/02/register1.jpg"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/02/register1.jpg" alt="注册失败"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/02/register1.jpg" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/02/register1.jpg" alt="注册失败"></a></p>
 <p>因为我的dingo开启了debug模式所以返回的json包含了debug字段</p>
 <p>我们把H换成小写</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/02/register2.jpg"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/02/register2.jpg" alt="注册成功"></a></p>
+<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/02/register2.jpg" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/02/register2.jpg" alt="注册成功"></a></p>
 <p>成功注册用户，返回201 created相应码并在header出现了新建资源的location</p>
 <h2 id="鉴权"><a href="#鉴权" class="headerlink" title="鉴权"></a>鉴权</h2><p>简单实现了注册逻辑后我们该实现鉴权的逻辑</p>
 <p>关于RESTful的鉴权方式常见的有以下几种</p>
@@ -514,7 +514,7 @@
 </ul>
 <p>其他的可以自定义</p>
 <p>最后是Signature<br>签名的算法如下，以HMAC算法为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">base64UrlEncode(payload),</span><br><span class="line">secret)</span><br></pre></td></tr></table></figure></p>
-<p>一个JWT就这样生成了<br>至于我们使用jwt的workflow就是我刚才说的精简版的Oauth<br><a href="https://www.alwayscoder.com/wp-content/uploads/2016/02/jwt-diagram.png"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/02/jwt-diagram.png" alt="jwt-diagram"></a></p>
+<p>一个JWT就这样生成了<br>至于我们使用jwt的workflow就是我刚才说的精简版的Oauth<br><a href="https://www.alwayscoder.com/wp-content/uploads/2016/02/jwt-diagram.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/02/jwt-diagram.png" alt="jwt-diagram"></a></p>
 <h2 id="在Dingo中集成JWT"><a href="#在Dingo中集成JWT" class="headerlink" title="在Dingo中集成JWT"></a>在Dingo中集成JWT</h2><p>扯了一堆概念，现在我们要着手实现JWT，我们当然不用重新造轮子，Dingo兼容的JWT实现我们将它配置好（<a href="https://github.com/tymondesigns/jwt-auth" target="_blank" rel="noopener">jwt-auth</a>）集成进去，具体方法参加项目<a href="https://github.com/tymondesigns/jwt-auth/wiki/Installation" target="_blank" rel="noopener">wiki</a></p>
 <p>我们在config/api.php配置文件中加上</p>
 <p><pre><code>&#39;jwt&#39; =&gt; &#39;Dingo\Api\Auth\Provider\JWT&#39;</code></pre><br>或者在ServiceProvider或bootstrap文件中加入</p>
