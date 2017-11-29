@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="有两个多月没写博客了，想想域名和VPS的费用我觉得有必要坚持写博客 -_- \ 为什么要编写基于composer的项目包对laravel框架而言，所有的依赖项都在vendor下，包括laravel framework本身，我认为基于composer的好处有以下几种  统一规范自动加载规范PSR4。有看过我laravel源码分析的同学应该还记得，laravel框架启动的时候是会require ven">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-28T13:10:05.000Z">
+<meta property="og:updated_time" content="2017-11-29T06:43:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何为laravel项目编写基于composer的第三方扩展包">
 <meta name="twitter:description" content="有两个多月没写博客了，想想域名和VPS的费用我觉得有必要坚持写博客 -_- \ 为什么要编写基于composer的项目包对laravel框架而言，所有的依赖项都在vendor下，包括laravel framework本身，我认为基于composer的好处有以下几种  统一规范自动加载规范PSR4。有看过我laravel源码分析的同学应该还记得，laravel框架启动的时候是会require ven">
@@ -329,22 +329,8 @@
 <li>composer的版本控制开箱可用，了解composer的同学应该知道我说的是什么。</li>
 </ol>
 <a id="more"></a>
-<pre><code>{% codeblock lang:php %}
-    /*
-    |--------------------------------------------------------------------------
-    | Register The Composer Auto Loader
-    |--------------------------------------------------------------------------
-    |
-    | Composer provides a convenient, automatically generated class loader
-    | for our application. We just need to utilize it! We'll require it
-    | into the script here so that we do not have to worry about the
-    | loading of any our classes "manually". Feels great to relax.
-    |
-    */
-    
-    require __DIR__.'/../vendor/autoload.php';
-    {% endcodeblock %}
-</code></pre><h2 id="为什么要写一个包呢"><a href="#为什么要写一个包呢" class="headerlink" title="为什么要写一个包呢"></a>为什么要写一个包呢</h2><ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">| Register The Composer Auto Loader</span></span><br><span class="line"><span class="comment">|--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">| Composer provides a convenient, automatically generated class loader</span></span><br><span class="line"><span class="comment">| for our application. We just need to utilize it! We'll require it</span></span><br><span class="line"><span class="comment">| into the script here so that we do not have to worry about the</span></span><br><span class="line"><span class="comment">| loading of any our classes "manually". Feels great to relax.</span></span><br><span class="line"><span class="comment">|</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span> <span class="keyword">__DIR__</span>.<span class="string">'/../vendor/autoload.php'</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="为什么要写一个包呢"><a href="#为什么要写一个包呢" class="headerlink" title="为什么要写一个包呢"></a>为什么要写一个包呢</h2><ol>
 <li>一处编写多处使用，降低开发成本</li>
 <li>需求有变动的时候也只用修改一处，降低维护成本</li>
 </ol>
