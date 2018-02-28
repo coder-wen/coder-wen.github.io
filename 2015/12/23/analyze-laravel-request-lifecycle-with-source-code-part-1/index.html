@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="孙子曰：  知己知彼，百战不殆在我看来学习一个框架最好的方法就是阅读源码，不了解框架本身的实现，调用框架提供的api只能停留在黑箱操作，所以我决定花一番功夫来研究下laravel核心部分的实现，今天先来分析下laravel框架的http request的生命周期">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.alwayscoder.com/wp-content/uploads/2015/12/laravel-http-request-lifecycle.png">
-<meta property="og:updated_time" content="2017-11-28T15:35:56.000Z">
+<meta property="og:image" content="https://nznasujhj.qnssl.com/wp-content/uploads/2015/12/laravel-http-request-lifecycle.png">
+<meta property="og:updated_time" content="2018-02-28T09:45:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="结合源码分析laravel单个HTTP请求生命周期[part 1]">
 <meta name="twitter:description" content="孙子曰：  知己知彼，百战不殆在我看来学习一个框架最好的方法就是阅读源码，不了解框架本身的实现，调用框架提供的api只能停留在黑箱操作，所以我决定花一番功夫来研究下laravel核心部分的实现，今天先来分析下laravel框架的http request的生命周期">
-<meta name="twitter:image" content="https://www.alwayscoder.com/wp-content/uploads/2015/12/laravel-http-request-lifecycle.png">
+<meta name="twitter:image" content="https://nznasujhj.qnssl.com/wp-content/uploads/2015/12/laravel-http-request-lifecycle.png">
 
 
 
@@ -368,7 +368,7 @@
 <p>$response通过send方法将返回传送给浏览器，一个HTTP请求至此结束。</p>
 <p>最后kernel调用terminate方法，主要是为了调用中间件的terminate方法做一些扫尾工作。</p>
 <p>由于笔者水平有限，我决定画张流程图</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2015/12/laravel-http-request-lifecycle.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2015/12/laravel-http-request-lifecycle.png" alt="laravel http request lifecycle"></a></p>
+<p><a href="https://nznasujhj.qnssl.com/wp-content/uploads/2015/12/laravel-http-request-lifecycle.png" target="_blank" rel="noopener"><img src="https://nznasujhj.qnssl.com/wp-content/uploads/2015/12/laravel-http-request-lifecycle.png" alt="laravel http request lifecycle"></a></p>
 <p>画图不易，转载请注明出处</p>
 
       

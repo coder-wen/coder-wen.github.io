@@ -335,8 +335,8 @@
 
       
         
-          <p>在<a href="https://www.alwayscoder.com/analyze-how-a-laravel-instance-build-with-source-code-section-1-part2/" target="_blank" rel="noopener">结合源码分析Laravel实例$App是怎么一步步构建的(上)[Part 2]</a>中我们已经讲到了Container的make函数如何解决嵌套依赖最后实例化$abstract的，今天我们先不急着接着讲，先画张图帮助大家理解一下之前的步骤，就没很详细画了</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/01/app1.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/01/app1.png" alt="$app1"></a><br>上一次我们已经进行到$this[‘events’]-&gt;fire($class=get_class($provider),[$provider])这一步</p>
+          <p>在<a href="https://nznasujhj.qnssl.com/analyze-how-a-laravel-instance-build-with-source-code-section-1-part2/" target="_blank" rel="noopener">结合源码分析Laravel实例$App是怎么一步步构建的(上)[Part 2]</a>中我们已经讲到了Container的make函数如何解决嵌套依赖最后实例化$abstract的，今天我们先不急着接着讲，先画张图帮助大家理解一下之前的步骤，就没很详细画了</p>
+<p><a href="https://nznasujhj.qnssl.com/wp-content/uploads/2016/01/app1.png" target="_blank" rel="noopener"><img src="https://nznasujhj.qnssl.com/wp-content/uploads/2016/01/app1.png" alt="$app1"></a><br>上一次我们已经进行到$this[‘events’]-&gt;fire($class=get_class($provider),[$provider])这一步</p>
 <p>通过Container实现ArrayAccess接口的offsetGet方法来调用make方法实例化一个对象<br>
           <!--noindex-->
           <div class="post-button text-center">
@@ -494,7 +494,7 @@
 
       
         
-          <p>在<a href="https://www.alwayscoder.com/analyze-laravel-request-lifecycle-with-source-code-part-1/" target="_blank" rel="noopener">结合源码分析Laravel单个HTTP请求生命周期[part 1]</a>中我们大致分析了laravel处理一次http请求的流程，让laravel初学者能对laravel的生命周期有个初步的认识，但是由于篇幅和时间的问题，其中一些具体的实现我一笔带过，在part2中，我今天来分析一下一个laravel实例，也就是入口文件中的$app是怎么一步步构建的。</p>
+          <p>在<a href="https://nznasujhj.qnssl.com/analyze-laravel-request-lifecycle-with-source-code-part-1/" target="_blank" rel="noopener">结合源码分析Laravel单个HTTP请求生命周期[part 1]</a>中我们大致分析了laravel处理一次http请求的流程，让laravel初学者能对laravel的生命周期有个初步的认识，但是由于篇幅和时间的问题，其中一些具体的实现我一笔带过，在part2中，我今天来分析一下一个laravel实例，也就是入口文件中的$app是怎么一步步构建的。</p>
 <p><strong>温馨提示，本文篇幅较长。</strong><br>
           <!--noindex-->
           <div class="post-button text-center">

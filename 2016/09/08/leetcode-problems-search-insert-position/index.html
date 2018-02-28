@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="今天的题目是Search Insert Position 老规矩先看题。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.alwayscoder.com/wp-content/uploads/2016/09/leetcode-Search-Insert-Position.png">
-<meta property="og:updated_time" content="2017-11-28T13:27:04.000Z">
+<meta property="og:image" content="https://nznasujhj.qnssl.com/wp-content/uploads/2016/09/leetcode-Search-Insert-Position.png">
+<meta property="og:updated_time" content="2018-02-28T09:45:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="leetcode刷题记之Search Insert Position">
 <meta name="twitter:description" content="今天的题目是Search Insert Position 老规矩先看题。">
-<meta name="twitter:image" content="https://www.alwayscoder.com/wp-content/uploads/2016/09/leetcode-Search-Insert-Position.png">
+<meta name="twitter:image" content="https://nznasujhj.qnssl.com/wp-content/uploads/2016/09/leetcode-Search-Insert-Position.png">
 
 
 
@@ -336,7 +336,7 @@
 
       
         <p>今天的题目是<a href="https://leetcode.com/problems/search-insert-position/" target="_blank" rel="noopener">Search Insert Position</a></p>
-<p>老规矩先看题。<br><a id="more"></a><br><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/leetcode-Search-Insert-Position.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/leetcode-Search-Insert-Position.png" alt="leetcode-search-insert-position"></a>给你一个有序数组nums，给你一个数target找到target在nums插入的位置如果该元素已经存在就返回存在元素所在的索引。</p>
+<p>老规矩先看题。<br><a id="more"></a><br><a href="https://nznasujhj.qnssl.com/wp-content/uploads/2016/09/leetcode-Search-Insert-Position.png" target="_blank" rel="noopener"><img src="https://nznasujhj.qnssl.com/wp-content/uploads/2016/09/leetcode-Search-Insert-Position.png" alt="leetcode-search-insert-position"></a>给你一个有序数组nums，给你一个数target找到target在nums插入的位置如果该元素已经存在就返回存在元素所在的索引。</p>
 <p>这道题不就是最最最最最典型的二分查找吗？？？？？居然难度还是medium？？？？？</p>
 <p>没什么好分析的了，直接上代码。算法时间复杂度O(Log(n))</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">searchInsert</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    low := <span class="number">0</span></span><br><span class="line">    high := <span class="built_in">len</span>(nums) - <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">    	mid := (high - low) / <span class="number">2</span> + low</span><br><span class="line">    	<span class="keyword">if</span> low &amp;gt; high &#123;</span><br><span class="line">    		<span class="keyword">return</span> low</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">if</span> nums[mid] &amp;lt; target &#123;</span><br><span class="line">    		low = mid + <span class="number">1</span></span><br><span class="line">    	&#125; <span class="keyword">else</span> <span class="keyword">if</span> nums[mid] &amp;gt; target &#123;</span><br><span class="line">    		high = mid - <span class="number">1</span></span><br><span class="line">    	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    		<span class="keyword">return</span> mid</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

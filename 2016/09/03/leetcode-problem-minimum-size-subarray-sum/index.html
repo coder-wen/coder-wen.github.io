@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="今天的题目是Minimum Size Subarray Sum">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.alwayscoder.com/wp-content/uploads/2016/09/minimum-size-subarray-sum.png">
-<meta property="og:updated_time" content="2017-11-28T13:43:55.000Z">
+<meta property="og:image" content="https://nznasujhj.qnssl.com/wp-content/uploads/2016/09/minimum-size-subarray-sum.png">
+<meta property="og:updated_time" content="2018-02-28T09:45:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="leetcode刷题记之Minimum Size Subarray Sum">
 <meta name="twitter:description" content="今天的题目是Minimum Size Subarray Sum">
-<meta name="twitter:image" content="https://www.alwayscoder.com/wp-content/uploads/2016/09/minimum-size-subarray-sum.png">
+<meta name="twitter:image" content="https://nznasujhj.qnssl.com/wp-content/uploads/2016/09/minimum-size-subarray-sum.png">
 
 
 
@@ -336,7 +336,7 @@
 
       
         <p>今天的题目是<a href="https://leetcode.com/problems/minimum-size-subarray-sum/" target="_blank" rel="noopener">Minimum Size Subarray Sum</a><br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/09/minimum-size-subarray-sum.png" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/09/minimum-size-subarray-sum.png" alt="minimum-size-subarray-sum"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><a href="https://nznasujhj.qnssl.com/wp-content/uploads/2016/09/minimum-size-subarray-sum.png" target="_blank" rel="noopener"><img src="https://nznasujhj.qnssl.com/wp-content/uploads/2016/09/minimum-size-subarray-sum.png" alt="minimum-size-subarray-sum"></a></p>
 <p>题目大意就是给你一个正整数的数组nums，和一个整数S，要求你找出最小子数组的长度，最小子数组满足<strong>sum&gt;=S</strong>，如果不存在返回0</p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>需要找到一个满足数组的子数组，那么我们得知道子数组的开始以及结尾索引。相当于两个游标在数组nums上移动可以得知这道题是个双指针问题。</p>
 <p>乍一看好像算法时间复杂度得用双循环成O(N^2)其实仔细想想O(N)就能解决问题，因为每次计算的和是能继续利用的，当前指针后移时不用从头再算。说得可能有点晕。我们还是举个例子。</p>

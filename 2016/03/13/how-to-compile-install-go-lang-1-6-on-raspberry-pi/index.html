@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="在2月16号，golang团队宣布go 1.6正式发布，在系统要求栏其实可以看到golang在linux平台是支持arm架构的    Operating system Architectures Notes          FreeBSD 9.3 or later amd64, 386 Debian GNU/kFreeBSD not supported   Linux 2.6.23 or lat">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-28T14:45:10.000Z">
+<meta property="og:updated_time" content="2018-02-28T09:45:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在树莓派上编译安装go1.6">
 <meta name="twitter:description" content="在2月16号，golang团队宣布go 1.6正式发布，在系统要求栏其实可以看到golang在linux平台是支持arm架构的    Operating system Architectures Notes          FreeBSD 9.3 or later amd64, 386 Debian GNU/kFreeBSD not supported   Linux 2.6.23 or lat">
@@ -384,7 +384,7 @@
 <p>可以看出树莓派2是完全满足要求的<br><a id="more"></a></p>
 <h2 id="准备编译器"><a href="#准备编译器" class="headerlink" title="准备编译器"></a>准备编译器</h2><p>go的工具同样是使用go语言写成的，所以这成了一个鸡生蛋蛋生鸡的问题，我在这使用了<a href="http://dave.cheney.net/" target="_blank" rel="noopener">Dave Cheney</a>制作的go 1.4 编译器，官网同样可以找到，我在这就不去试了</p>
 <p><code>curl http://dave.cheney.net/paste/go-linux-arm-bootstrap-c788a8e.tbz | tar xj</code></p>
-<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><p>由于总所周知的原因，我们又需要梯子才能下载到golang的源码，我在这使用tsocks将socks代理转为http代理，具体方法可以参考我的这篇博文<br><a href="https://www.alwayscoder.com/use-tsocks-transparent-socks-to-http-proxy/" target="_blank" rel="noopener">使用tsocks将Socks代理转为Http代理</a><br><code>tsocks wget https://storage.googleapis.com/golang/go1.6.src.tar.gz</code></p>
+<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><p>由于总所周知的原因，我们又需要梯子才能下载到golang的源码，我在这使用tsocks将socks代理转为http代理，具体方法可以参考我的这篇博文<br><a href="https://nznasujhj.qnssl.com/use-tsocks-transparent-socks-to-http-proxy/" target="_blank" rel="noopener">使用tsocks将Socks代理转为Http代理</a><br><code>tsocks wget https://storage.googleapis.com/golang/go1.6.src.tar.gz</code></p>
 <h2 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//如果默认路径安装 我们解压到</span><br><span class="line">tar -C /usr/<span class="built_in">local</span> -xzf go1.6.src.tar.gz</span><br><span class="line">//当然我们也可以自定义路径安装</span><br><span class="line">tar -C /your/custom/location -xzf go1.6.src.tar.gz</span><br><span class="line"><span class="built_in">cd</span>  go/src</span><br><span class="line">//配置好编译器路径</span><br><span class="line">env GO_TEST_TIMEOUT_SCALE=10 GOROOT_BOOTSTRAP=<span class="variable">$HOME</span>/go-linux-arm-bootstrap ./all.bash</span><br><span class="line">//不愿意做测试的可以将all.bash换成make.bash 将节约不少时间</span><br><span class="line">env GOROOT_BOOTSTRAP=<span class="variable">$HOME</span>/go-linux-arm-bootstrap ./make.bash</span><br><span class="line">//静静的等待30-40分钟左右</span><br></pre></td></tr></table></figure>
 <h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//如果使用全局安装</span><br><span class="line">sudo vim /etc/profile</span><br><span class="line">//如果对当前用户安装</span><br><span class="line">vim <span class="variable">$HOME</span>/.profile</span><br></pre></td></tr></table></figure>
 <p>在配置文件最后添加</p>

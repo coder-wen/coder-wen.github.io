@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="coderwen的踩坑日记">
 <meta property="og:description" content="最近心血来潮在namecheap买下了域名，搭起了博客以记录码路上的点点滴滴，购买域名的时候发现SSL Cert第一年只需1.99$，毫不犹豫地购买了，折腾了小半天，发现网上的教程比较老，第一篇博客就记录下配置的过程。 PS:因为我已经配置好了，有些截图不能重现，部分流程可以结合namecheap的帮助文档配置">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.alwayscoder.com/wp-content/uploads/2015/12/finish.jpg">
-<meta property="og:updated_time" content="2017-11-28T15:25:15.000Z">
+<meta property="og:image" content="https://nznasujhj.qnssl.com/wp-content/uploads/2015/12/finish.jpg">
+<meta property="og:updated_time" content="2018-02-28T09:45:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="折腾之Nginx配置namecheap提供的comodoSSL">
 <meta name="twitter:description" content="最近心血来潮在namecheap买下了域名，搭起了博客以记录码路上的点点滴滴，购买域名的时候发现SSL Cert第一年只需1.99$，毫不犹豫地购买了，折腾了小半天，发现网上的教程比较老，第一篇博客就记录下配置的过程。 PS:因为我已经配置好了，有些截图不能重现，部分流程可以结合namecheap的帮助文档配置">
-<meta name="twitter:image" content="https://www.alwayscoder.com/wp-content/uploads/2015/12/finish.jpg">
+<meta name="twitter:image" content="https://nznasujhj.qnssl.com/wp-content/uploads/2015/12/finish.jpg">
 
 
 
@@ -362,7 +362,7 @@
 <p>示例如下</p>
 <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">443</span>;</span><br><span class="line">    <span class="comment">#同时监听80端口，以便http跳转https</span></span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">ssl</span> <span class="literal">on</span>;</span><br><span class="line">    <span class="attribute">ssl_certificate</span> /path/to/your_cert_chain.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /path/to/your_privkey.key;</span><br><span class="line">    <span class="attribute">server_name</span>  www.your_domin.com;</span><br><span class="line">    <span class="comment">#.......你的其他配置</span></span><br><span class="line">    <span class="comment">#通过nginx 497错误 将http请求全部重定向到https</span></span><br><span class="line">    <span class="attribute">error_page</span> <span class="number">497</span> https://<span class="variable">$server_name</span><span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最后记得重启nginx服务器<br><code>nginx -s reload</code><br>刷新页面，大功告成</p>
-<p><a href="https://www.alwayscoder.com/wp-content/uploads/2015/12/finish.jpg" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2015/12/finish.jpg" alt="ssl配置完成"></a></p>
+<p><a href="https://nznasujhj.qnssl.com/wp-content/uploads/2015/12/finish.jpg" target="_blank" rel="noopener"><img src="https://nznasujhj.qnssl.com/wp-content/uploads/2015/12/finish.jpg" alt="ssl配置完成"></a></p>
 
       
     </div>
