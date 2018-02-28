@@ -346,7 +346,7 @@
 <p>基于debian-jessie的raspbian-jessie了，抱着死马当活马医的心态，我重新烧制了最新的系统，然后运行了之前的驱动，然并卵，正当我绝望的时候，突然我在<a href="http://www.waveshare.com/wiki/3.5inch_RPi_LCD_(A" target="_blank" rel="noopener">wiki</a>)发现了一个不起眼的链接</p>
 <p><a href="https://www.alwayscoder.com/wp-content/uploads/2016/03/thank-god-link.jpg" target="_blank" rel="noopener"><img src="https://www.alwayscoder.com/wp-content/uploads/2016/03/thank-god-link.jpg" alt="thank-god-link"></a></p>
 <h2 id="下载驱动"><a href="#下载驱动" class="headerlink" title="下载驱动"></a>下载驱动</h2><p><code>wget http://www.waveshare.com/w/upload/9/9d/LCD-show-151020.tar.gz</code></p>
-<h2 id="解压并运行驱动"><a href="#解压并运行驱动" class="headerlink" title="解压并运行驱动"></a>解压并运行驱动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar xvf LCD-show.tar.gz</span><br><span class="line"><span class="built_in">cd</span> LCD-show/</span><br><span class="line">sudo ./LCD35-show</span><br></pre></td></tr></table></figure>
+<h2 id="解压并运行驱动"><a href="#解压并运行驱动" class="headerlink" title="解压并运行驱动"></a>解压并运行驱动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar xvf LCD-show.tar.gz</span><br><span class="line"><span class="built_in">cd</span> LCD-show/</span><br><span class="line">sudo ./LCD35-show</span><br></pre></td></tr></table></figure>
 <h2 id="配置图形化启动"><a href="#配置图形化启动" class="headerlink" title="配置图形化启动"></a>配置图形化启动</h2><p>因为我不使用图形化界面，所以并没有配置boot选项，如果需要以图形界面进入请进行如下配置<br><code>sudo raspi-config</code></p>
 <p>依次选择</p>
 <p><code>Enable Boot to Desktop/Scratch -&gt; Desktop Log in as user &#39;pi&#39; at the graphical desktop</code><br>然后重启，你就能看到大大的树莓LOGO了</p>
@@ -551,7 +551,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

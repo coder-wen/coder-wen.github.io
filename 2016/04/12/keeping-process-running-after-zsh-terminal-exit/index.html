@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="bash终端退出后要想在后台继续运行程序非常简单，直接在程序运行指令后加上&amp;amp;即可，比如cow&amp;amp;但是我发现使用zsh的时候这样退出，程序即刻被终止了，经过一番查询，解决方法很简单，zsh通过&amp;amp;!或者&amp;amp;|使程序后台运行 123cow &amp;amp;!#or">
+<meta name="description" content="bash终端退出后要想在后台继续运行程序非常简单，直接在程序运行指令后加上&amp;amp;即可，比如cow&amp;amp;但是我发现使用zsh的时候这样退出，程序即刻被终止了，经过一番查询，解决方法很简单，zsh通过&amp;amp;!或者&amp;amp;|使程序后台运行 cow &amp;amp;!#orcow">
 <meta name="keywords" content="background,bash,zsh">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决zsh下关闭终端后台程序不能继续运行的问题">
 <meta property="og:url" content="https://coder-wen.github.io/2016/04/12/keeping-process-running-after-zsh-terminal-exit/index.html">
 <meta property="og:site_name" content="coderwen的踩坑日记">
-<meta property="og:description" content="bash终端退出后要想在后台继续运行程序非常简单，直接在程序运行指令后加上&amp;amp;即可，比如cow&amp;amp;但是我发现使用zsh的时候这样退出，程序即刻被终止了，经过一番查询，解决方法很简单，zsh通过&amp;amp;!或者&amp;amp;|使程序后台运行 123cow &amp;amp;!#orcow &amp;amp;|">
+<meta property="og:description" content="bash终端退出后要想在后台继续运行程序非常简单，直接在程序运行指令后加上&amp;amp;即可，比如cow&amp;amp;但是我发现使用zsh的时候这样退出，程序即刻被终止了，经过一番查询，解决方法很简单，zsh通过&amp;amp;!或者&amp;amp;|使程序后台运行 cow &amp;amp;!#orcow &amp;amp;|">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-11-28T14:28:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决zsh下关闭终端后台程序不能继续运行的问题">
-<meta name="twitter:description" content="bash终端退出后要想在后台继续运行程序非常简单，直接在程序运行指令后加上&amp;amp;即可，比如cow&amp;amp;但是我发现使用zsh的时候这样退出，程序即刻被终止了，经过一番查询，解决方法很简单，zsh通过&amp;amp;!或者&amp;amp;|使程序后台运行 123cow &amp;amp;!#orcow &amp;amp;|">
+<meta name="twitter:description" content="bash终端退出后要想在后台继续运行程序非常简单，直接在程序运行指令后加上&amp;amp;即可，比如cow&amp;amp;但是我发现使用zsh的时候这样退出，程序即刻被终止了，经过一番查询，解决方法很简单，zsh通过&amp;amp;!或者&amp;amp;|使程序后台运行 cow &amp;amp;!#orcow &amp;amp;|">
 
 
 
@@ -334,14 +334,14 @@
 
       
         <p>bash终端退出后要想在后台继续运行程序非常简单，直接在程序运行指令后加上&amp;即可，比如<br><code>cow&amp;</code><br>但是我发现使用zsh的时候这样退出，程序即刻被终止了，经过一番查询，解决方法很简单，zsh通过&amp;!或者&amp;|使程序后台运行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cow &amp;!</span><br><span class="line"><span class="comment">#or</span></span><br><span class="line">cow &amp;|</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cow &amp;!</span><br><span class="line"><span class="comment">#or</span></span><br><span class="line">cow &amp;|</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>但是请注意根据zsh的官方手册说明，使用这种方式后台，程序会即刻disown，无法使用jobs以及bg来调度</p>
 <blockquote>
 <p>If a job is started with <strong>&amp;|</strong> or <strong>&amp;!</strong>, then that job is immediately disowned. After startup, it does not have a place in the job table, and is not subject to the job control features described here.</p>
 </blockquote>
 <p>当然我们也可以先切换到bash 使用前一种方法</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cow &amp;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cow &amp;;</span><br></pre></td></tr></table></figure>
 <p>希望能解决大家的问题</p>
 
       
@@ -516,7 +516,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

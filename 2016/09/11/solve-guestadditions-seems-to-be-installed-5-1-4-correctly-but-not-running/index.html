@@ -334,14 +334,14 @@
 
       
         <p>最近vagrant两次出现GuestAdditions seems to be installed (5.1.4) correctly, but not running的错误导致我无法开启虚拟机，而这两次报错的原因我都不是太清楚，搜遍google唯一有点相关的是vbguest插件的<a href="https://github.com/dotless-de/vagrant-vbguest/issues/202" target="_blank" rel="noopener">issues</a>但是里面的解决方法对我来说也不管用，你可以去看看说不定里面的方法对你是适用的。<br><a id="more"></a><br>最后我的解决方法也很暴力治标不治本但是能暂时解决问题。直接删掉重装vagrant box，<strong>请确保你的重要资料已经备份，对我来说都是共享目录挂载的，无所谓了。</strong></p>
-<h2 id="移除出现问题的vbox"><a href="#移除出现问题的vbox" class="headerlink" title="移除出现问题的vbox"></a>移除出现问题的vbox</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant box remove box_name</span><br></pre></td></tr></table></figure>
+<h2 id="移除出现问题的vbox"><a href="#移除出现问题的vbox" class="headerlink" title="移除出现问题的vbox"></a>移除出现问题的vbox</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vagrant box remove box_name</span><br></pre></td></tr></table></figure>
 <p>删除virtual box对应目录,mac的默认目录如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf ~/VirtualBox\ VMs/your-box-name</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rm -rf ~/VirtualBox\ VMs/your-box-name</span><br></pre></td></tr></table></figure>
 <h2 id="重新添加vagrant-box"><a href="#重新添加vagrant-box" class="headerlink" title="重新添加vagrant box"></a>重新添加vagrant box</h2><p>对我来说我是通过metadata.json导入box的，你当时怎么装的现在就怎么装咯</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant box add metadata.json</span><br></pre></td></tr></table></figure>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vagrant box add metadata.json</span><br></pre></td></tr></table></figure>
 <p>然后就奇迹般的好了。</p>
 <p>天知道为什么会出现这个问题。。。。</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> ➜  Homestead git:(master) ✗ vagrant vbguest --status</span><br><span class="line">Got different reports about installed GuestAdditions version:</span><br><span class="line">Virtualbox on your host claims:   5.0.20</span><br><span class="line">VBoxService inside the vm claims: 5.1.4</span><br><span class="line">Going on, assuming VBoxService is correct...</span><br><span class="line">[default] GuestAdditions 5.1.4 running --- OK.</span><br></pre></td></tr></table></figure>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"> ➜  Homestead git:(master) ✗ vagrant vbguest --status</span><br><span class="line">Got different reports about installed GuestAdditions version:</span><br><span class="line">Virtualbox on your host claims:   5.0.20</span><br><span class="line">VBoxService inside the vm claims: 5.1.4</span><br><span class="line">Going on, assuming VBoxService is correct...</span><br><span class="line">[default] GuestAdditions 5.1.4 running --- OK.</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -539,7 +539,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
